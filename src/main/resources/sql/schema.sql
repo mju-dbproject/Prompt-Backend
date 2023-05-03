@@ -52,7 +52,7 @@ CREATE TABLE manpower
     end_date datetime NOT NULL ,
     PRIMARY KEY (id),
     CONSTRAINT fk_manpower_to_employee FOREIGN KEY (employee_id) REFERENCES employee (id) ON DELETE RESTRICT ON UPDATE RESTRICT,
-    CONSTRAINT fk_manpower_to_project FOREIGN KEY (project_id) REFERENCES project (id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_manpower_to_project FOREIGN KEY (project_id) REFERENCES project (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 
@@ -68,5 +68,5 @@ CREATE TABLE evaluation
     end_date datetime DEFAULT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_evaluation_to_manpower FOREIGN KEY (evaluated_id) REFERENCES manpower (id) ON DELETE RESTRICT ON UPDATE RESTRICT ,
-    CONSTRAINT fk_evaluation_to_project FOREIGN KEY (project_id) REFERENCES manpower (id) ON DELETE RESTRICT ON UPDATE RESTRICT
+    CONSTRAINT fk_evaluation_to_project FOREIGN KEY (project_id) REFERENCES project (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
