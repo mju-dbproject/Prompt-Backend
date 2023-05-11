@@ -11,3 +11,8 @@ spring:
     properties:
       hibernate:
         show_sql: true
+
+jwt:
+  header: Authorization
+  secret: index
+  expirySeconds: 86400

@@ -51,6 +51,7 @@ public class Employee {
 
     private String skill;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Position position;
 
