@@ -1,6 +1,8 @@
 package com.team4.prompt.employee.controller.dto;
 
 import com.team4.prompt.employee.model.Employee;
+import com.team4.prompt.employee.model.Position;
+import com.team4.prompt.employee.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -24,6 +26,7 @@ public class EmployeeCreateRequest {
     private String phoneNumber;
     @NotBlank
     private String education;
+
     private int experienceYear;
 
     private String skill;
@@ -42,7 +45,8 @@ public class EmployeeCreateRequest {
                 .experienceYear(experienceYear)
                 .enteringDate(LocalDateTime.now())
                 .skill(skill)
-                .position(position)
+                .position(Position.of(position))
+                .role(Role.USER)
                 .build();
     }
 
