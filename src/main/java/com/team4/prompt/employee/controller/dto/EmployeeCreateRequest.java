@@ -2,6 +2,7 @@ package com.team4.prompt.employee.controller.dto;
 
 import com.team4.prompt.employee.model.Employee;
 import com.team4.prompt.employee.model.Position;
+import com.team4.prompt.employee.model.Rank;
 import com.team4.prompt.employee.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -30,8 +31,10 @@ public class EmployeeCreateRequest {
     private int experienceYear;
 
     private String skill;
-
+    @NotBlank
     private String position;
+    @NotBlank
+    private String rank;
 
     public Employee newUser(PasswordEncoder passwordEncoder) {
         return Employee.builder()
@@ -46,6 +49,7 @@ public class EmployeeCreateRequest {
                 .enteringDate(LocalDateTime.now())
                 .skill(skill)
                 .position(Position.of(position))
+                .rank(Rank.of(rank))
                 .role(Role.USER)
                 .build();
     }
