@@ -7,17 +7,21 @@ import lombok.Getter;
 
 @Getter
 public enum Position {
-    DIRECTOR("임원"),
-    SENIOR_MANAGER("수석"),
-    MANAGER("책임"),
-    SENIOR_ASSISTANCE("선임"),
-    ASSISTANCE("사원");
+    DIRECTOR("경영진", 0),
+    DEVELOPER("개발자", 1),
+    SALES("영업관리", 2),
+    BUSINESS("사업관리", 3),
+    ADMINISTRATION("경영 관리", 4),
+    MARKETING("마켓팅", 5),
+    RESEARCH("연구개발", 6);
 
     private final String positionName;
-    Position(String positionName) {
-        this.positionName = positionName;
-    }
+    private final int positionNumber;
 
+    Position(String positionName, int positionNumber) {
+        this.positionName = positionName;
+        this.positionNumber = positionNumber;
+    }
     @JsonCreator
     public static Position of(String positionName) {
         return Arrays.stream(Position.values())
