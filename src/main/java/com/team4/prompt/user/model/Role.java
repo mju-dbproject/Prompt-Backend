@@ -1,4 +1,4 @@
-package com.team4.prompt.employee.model;
+package com.team4.prompt.user.model;
 
 import java.util.Arrays;
 import java.util.List;

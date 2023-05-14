@@ -2,7 +2,7 @@ package com.team4.prompt.config;
 
 import com.team4.prompt.auth.jwt.JwtAuthFilter;
 import com.team4.prompt.auth.jwt.JwtProvider;
-import com.team4.prompt.employee.service.EmployeeService;
+import com.team4.prompt.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +22,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private static final String API_PREFIX = "/api";
-    private final EmployeeService employeeService;
+    private final UserService userService;
     private final JwtProvider jwtProvider;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .requestMatchers(
-                        API_PREFIX + "/employee/join",
+                        API_PREFIX + "/user/join",
                         API_PREFIX + "/auth/login"
                 ).permitAll()
                 .anyRequest().authenticated()
@@ -54,7 +54,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthFilter jwtAuthFilter() {
-        return new JwtAuthFilter(jwtProvider, employeeService);
+        return new JwtAuthFilter(jwtProvider, userService);
     }
 
     @Bean

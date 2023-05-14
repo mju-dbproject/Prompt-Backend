@@ -2,8 +2,8 @@ package com.team4.prompt.auth.jwt;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.team4.prompt.auth.model.PrincipalDetails;
-import com.team4.prompt.employee.model.Employee;
-import com.team4.prompt.employee.service.EmployeeService;
+import com.team4.prompt.user.model.User;
+import com.team4.prompt.user.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthFilter extends OncePerRequestFilter {
     private static final String TOKEN_PREFIX = "Bearer ";
     private final JwtProvider jwtProvider;
-    private final EmployeeService employeeService;
+    private final UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -29,8 +29,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if(token != null) {
                 DecodedJWT verify = jwtProvider.verify(token);
                 String userId = verify.getClaim("userId").toString();
-                Employee employee = employeeService.findByUserId(userId);
-                PrincipalDetails principalDetails = new PrincipalDetails(employee);
+                User user = userService.findByUserId(userId);
+                PrincipalDetails principalDetails = new PrincipalDetails(user);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

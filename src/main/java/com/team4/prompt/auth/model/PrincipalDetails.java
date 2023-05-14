@@ -1,6 +1,6 @@
 package com.team4.prompt.auth.model;
 
-import com.team4.prompt.employee.model.Employee;
+import com.team4.prompt.user.model.User;
 import java.util.ArrayList;
 import java.util.Collection;
 import lombok.Getter;
@@ -9,16 +9,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 public class PrincipalDetails implements UserDetails {
-    private final Employee employee;
+    private final User user;
 
-    public PrincipalDetails(Employee employee) {
-        this.employee = employee;
+    public PrincipalDetails(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        employee.getRole().getAuthorities().forEach(r -> {
+        user.getRole().getAuthorities().forEach(r -> {
             authorities.add(() -> r);
         });
         return authorities;
@@ -26,12 +26,12 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return employee.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return employee.getUserId();
+        return user.getUserId();
     }
 
     @Override

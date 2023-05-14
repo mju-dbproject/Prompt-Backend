@@ -1,4 +1,4 @@
-package com.team4.prompt.employee.model;
+package com.team4.prompt.user.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Employee {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,8 +73,8 @@ public class Employee {
     private boolean deleted;
 
     @Builder
-    private Employee(String userId, String email, String password, String name, String registerNumber, String phoneNumber,
-                     String education, int experienceYear, LocalDateTime enteringDate, String skill, Position position, Rank rank, Role role) {
+    private User(String userId, String email, String password, String name, String registerNumber, String phoneNumber,
+                 String education, int experienceYear, LocalDateTime enteringDate, String skill, Position position, Rank rank, Role role) {
         this.userId = userId;
         this.email = email;
         this.password = password;

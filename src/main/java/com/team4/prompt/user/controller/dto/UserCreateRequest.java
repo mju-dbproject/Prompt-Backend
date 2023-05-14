@@ -1,9 +1,9 @@
-package com.team4.prompt.employee.controller.dto;
+package com.team4.prompt.user.controller.dto;
 
-import com.team4.prompt.employee.model.Employee;
-import com.team4.prompt.employee.model.Position;
-import com.team4.prompt.employee.model.Rank;
-import com.team4.prompt.employee.model.Role;
+import com.team4.prompt.user.model.User;
+import com.team4.prompt.user.model.Position;
+import com.team4.prompt.user.model.Rank;
+import com.team4.prompt.user.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
-public class EmployeeCreateRequest {
+public class UserCreateRequest {
     @NotBlank
     private String userId;
     @Email
@@ -36,8 +36,8 @@ public class EmployeeCreateRequest {
     @NotBlank
     private String rank;
 
-    public Employee newUser(PasswordEncoder passwordEncoder) {
-        return Employee.builder()
+    public User newUser(PasswordEncoder passwordEncoder) {
+        return User.builder()
                 .userId(userId)
                 .email(email)
                 .password(passwordEncoder.encode(password))
