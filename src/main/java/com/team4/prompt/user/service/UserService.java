@@ -1,0 +1,26 @@
+package com.team4.prompt.user.service;
+
+import com.team4.prompt.user.model.User;
+import com.team4.prompt.user.repository.UserRepository;
+import java.time.LocalDateTime;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+    private final UserRepository userRepository;
+
+    public void join(User user) {
+        Integer enteringOrderInYear = userRepository.findEnteringCountInYear(LocalDateTime.now());
+        System.out.println(enteringOrderInYear);
+        user.giveEmployeeNumber(enteringOrderInYear);
+        userRepository.save(user);
+    }
+
+    public User findByUserId(String userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(()-> new IllegalArgumentException(""));
+    }
+}

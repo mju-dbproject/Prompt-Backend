@@ -1,4 +1,4 @@
-package com.team4.prompt.employee.model;
+package com.team4.prompt.user.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.Arrays;

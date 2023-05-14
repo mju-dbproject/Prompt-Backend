@@ -1,7 +1,7 @@
-package com.team4.prompt.employee.controller;
+package com.team4.prompt.user.controller;
 
-import com.team4.prompt.employee.controller.dto.EmployeeCreateRequest;
-import com.team4.prompt.employee.service.EmployeeService;
+import com.team4.prompt.user.controller.dto.UserCreateRequest;
+import com.team4.prompt.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/employee")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
-public class EmployeeController {
+public class UserController {
 
-    private final EmployeeService employeeService;
+    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/join")
-    public void join(@RequestBody @Valid EmployeeCreateRequest employeeCreateRequest) {
-        employeeService.join(employeeCreateRequest.newUser(passwordEncoder));
+    public void join(@RequestBody @Valid UserCreateRequest userCreateRequest) {
+        userService.join(userCreateRequest.newUser(passwordEncoder));
     }
 }
