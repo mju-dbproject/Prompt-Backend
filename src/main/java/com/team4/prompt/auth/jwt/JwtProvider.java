@@ -28,7 +28,7 @@ public class JwtProvider {
                 .withSubject(principalDetails.getUsername())
                 .withIssuedAt(now)
                 .withExpiresAt(new Date(now.getTime() + expirySeconds))
-                .withClaim("id", principalDetails.getEmployee().getId())
+                .withClaim("id", principalDetails.getUser().getId())
                 .withClaim("userId", principalDetails.getUsername())
                 .sign(Algorithm.HMAC512(secret));
     }
