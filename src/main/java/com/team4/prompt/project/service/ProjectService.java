@@ -1,10 +1,13 @@
 package com.team4.prompt.project.service;
 
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
+import com.team4.prompt.project.cotroller.dto.ProjectDto;
+import com.team4.prompt.project.cotroller.dto.ProjectListDto;
 import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.project.repository.ProjectRepository;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +34,11 @@ public class ProjectService {
         int createOrder = projectRepository.findCreateCountInMonth(now);
         newProject.giveProjectNumber(createOrder);
         projectRepository.save(newProject);
+    }
+
+    public ProjectListDto getAllProject(){
+        List<Project> projectList = projectRepository.findAll();
+        List<ProjectDto> projectDtoList = projectList.stream().map(ProjectDto::new).toList();
+        return new ProjectListDto(projectDtoList);
     }
 }
