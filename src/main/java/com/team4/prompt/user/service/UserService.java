@@ -13,8 +13,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public void join(User user) {
-        Integer enteringOrderInYear = userRepository.findEnteringCountInYear(LocalDateTime.now());
-        System.out.println(enteringOrderInYear);
+        int enteringOrderInYear = userRepository.findEnteringCountInYear(LocalDateTime.now());
         user.giveEmployeeNumber(enteringOrderInYear);
         userRepository.save(user);
     }
