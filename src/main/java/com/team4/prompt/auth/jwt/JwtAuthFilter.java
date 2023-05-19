@@ -28,7 +28,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = getToken(request);
             if(token != null) {
                 DecodedJWT verify = jwtProvider.verify(token);
-                String userId = verify.getClaim("userId").toString();
+                String userId = verify.getClaim("userId").asString();
                 User user = userService.findByUserId(userId);
                 PrincipalDetails principalDetails = new PrincipalDetails(user);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());

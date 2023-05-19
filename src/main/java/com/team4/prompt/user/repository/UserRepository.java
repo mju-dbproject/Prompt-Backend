@@ -11,5 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUserId(String userId);
 
     @Query("select count(*) from User where date_format(:now, '%Y') = year(enteringDate)")
-    Integer findEnteringCountInYear(LocalDateTime now);
+    int findEnteringCountInYear(LocalDateTime now);
 }
