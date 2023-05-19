@@ -32,4 +32,9 @@ public class ProjectController {
     public ProjectListDto getInProgressProject() {
         return projectService.getInProgressProject();
     }
+
+    @GetMapping("/done")
+    public ProjectListDto getDoneProject() {
+        return projectService.getDoneProject();
+    }
 }
