@@ -41,4 +41,10 @@ public class ProjectService {
         List<ProjectDto> projectDtoList = projectList.stream().map(ProjectDto::new).toList();
         return new ProjectListDto(projectDtoList);
     }
+
+    public ProjectListDto getInProgressProject(){
+        List<Project> projectList = projectRepository.findByStatus(ProjectStatus.PROGRESS);
+        List<ProjectDto> projectDtoList = projectList.stream().map(ProjectDto::new).toList();
+        return new ProjectListDto(projectDtoList);
+    }
 }

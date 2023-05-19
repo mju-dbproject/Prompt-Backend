@@ -27,4 +27,9 @@ public class ProjectController {
     public ProjectListDto getAllProject(){
         return projectService.getAllProject();
     }
+
+    @GetMapping("/in-progress")
+    public ProjectListDto getInProgressProject() {
+        return projectService.getInProgressProject();
+    }
 }
