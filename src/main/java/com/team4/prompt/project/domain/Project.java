@@ -2,6 +2,8 @@ package com.team4.prompt.project.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,6 +39,7 @@ public class Project {
     private int budget;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private ProjectStatus status;
 
     private String description;
@@ -61,11 +64,9 @@ public class Project {
     }
 
     public void giveProjectNumber(int createOrder){
-        System.out.println(createOrder);
         String projectNumber = createDate.getYear() % 100
                 + convertMonthToString(createDate.getMonthValue())
                 + convertCreatingOrder(createOrder);
-        System.out.println(projectNumber);
         if(projectNumber.length()!=6) {
             throw new IllegalArgumentException("");
         }

@@ -1,9 +1,11 @@
 package com.team4.prompt.project.cotroller;
 
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
+import com.team4.prompt.project.cotroller.dto.ProjectListDto;
 import com.team4.prompt.project.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,5 +21,10 @@ public class ProjectController {
     @PostMapping
     public void createProject(@RequestBody @Valid ProjectCreateRequest projectCreateRequest) {
         projectService.createProject(projectCreateRequest);
+    }
+
+    @GetMapping("/all")
+    public ProjectListDto getAllProject(){
+        return projectService.getAllProject();
     }
 }
