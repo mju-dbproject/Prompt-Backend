@@ -45,8 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/info/{employeeNumber}")
-    public ResponseEntity<UserInfoDto> getMyInfo(@PathVariable String employeeNumber) {
-        UserInfoDto userInfoDto = userService.getMyInfo(employeeNumber);
-        return ResponseEntity.ok(userInfoDto);
+    public UserInfoDto getMyInfo(@PathVariable String employeeNumber) {
+        return userService.getMyInfo(employeeNumber);
     }
 }

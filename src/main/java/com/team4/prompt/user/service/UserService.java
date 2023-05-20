@@ -17,7 +17,7 @@ public class UserService {
     //private final PasswordEncoder passwordEncoder;
 
     public void join(User user) {
-        Integer enteringOrderInYear = userRepository.findEnteringCountInYear(LocalDateTime.now());
+        int enteringOrderInYear = userRepository.findEnteringCountInYear(LocalDateTime.now());
         System.out.println(enteringOrderInYear);
         user.giveEmployeeNumber(enteringOrderInYear);
         userRepository.save(user);
@@ -27,6 +27,7 @@ public class UserService {
         return userRepository.findByUserId(userId)
                 .orElseThrow(()-> new IllegalArgumentException(""));
     }
+
     public boolean checkId(String userId) {
         return userRepository.findByUserId(userId).isEmpty();
     }
