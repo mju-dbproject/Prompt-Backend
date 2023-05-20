@@ -1,5 +1,7 @@
 package com.team4.prompt.project.domain;
 
+import com.team4.prompt.manpower.ManPower;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,7 +9,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,6 +37,9 @@ public class Project {
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<ManPower> manPowerList = new ArrayList<>();
 
     @Column(nullable = false)
     private String client;
