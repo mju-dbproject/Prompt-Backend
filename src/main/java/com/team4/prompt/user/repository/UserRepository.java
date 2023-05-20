@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<User> findAllByOrderByApprovedDesc();
+    List<User> findAllByOrderByApprovedAsc();
     List<User> findByPositionAndApproved(Position position, boolean approved);
     List<User> findByPositionNotAndApproved(Position position, boolean approved);
     Optional<User> findById(Long id);
