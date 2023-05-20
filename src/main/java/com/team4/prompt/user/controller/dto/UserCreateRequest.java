@@ -54,4 +54,7 @@ public class UserCreateRequest {
                 .build();
     }
 
+    public User toEntity() {
+        return User.builder().userId(userId).build();
+    }
 }
