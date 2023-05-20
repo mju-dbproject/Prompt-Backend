@@ -118,4 +118,9 @@ public class User {
         }
         return String.valueOf(enteringOrder);
     }
+
+    public void promoteEmployee(String userId, Role role){
+        this.userId = userId;
+        this.role = role;
+    }
 }
