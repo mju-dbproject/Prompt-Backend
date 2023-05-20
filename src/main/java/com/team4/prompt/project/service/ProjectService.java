@@ -62,4 +62,12 @@ public class ProjectService {
         List<ProjectDto> projectDtoList = manpowerList.stream().map(ManPower::getProject).map(ProjectDto::new).toList();
         return new ProjectListDto(projectDtoList);
     }
+
+    public ProjectListDto getInProgressProjectForEmployee(User user) {
+        List<ManPower> manpowerList = manpowerRepository.findByUser(user);
+        List<ProjectDto> projectDtoList = manpowerList.stream().map(ManPower::getProject)
+                .filter(project -> project.getStatus().equals(ProjectStatus.PROGRESS))
+                .map(ProjectDto::new).toList();
+        return new ProjectListDto(projectDtoList);
+    }
 }
