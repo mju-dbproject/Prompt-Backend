@@ -1,8 +1,10 @@
 package com.team4.prompt.project.cotroller;
 
+import com.team4.prompt.common.CurrentUser;
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
 import com.team4.prompt.project.cotroller.dto.ProjectListDto;
 import com.team4.prompt.project.service.ProjectService;
+import com.team4.prompt.user.model.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,21 +29,25 @@ public class ProjectController {
 
     @GetMapping("/admin/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ProjectListDto getAllProject(){
-        return projectService.getAllProject();
+    public ProjectListDto getAllProjectForAdmin(){
+        return projectService.getAllProjectForAdmin();
     }
 
     @GetMapping("admin/in-progress")
     @PreAuthorize("hasRole('ADMIN')")
-    public ProjectListDto getInProgressProject() {
-        return projectService.getInProgressProject();
+    public ProjectListDto getInProgressProjectForAdmin() {
+        return projectService.getInProgressProjectForAdmin();
     }
 
     @GetMapping("admin/done")
     @PreAuthorize("hasRole('ADMIN')")
-    public ProjectListDto getDoneProject() {
-        return projectService.getDoneProject();
+    public ProjectListDto getDoneProjectForAdmin() {
+        return projectService.getDoneProjectForAdmin();
     }
 
+    @GetMapping("/all")
+    public ProjectListDto getAllProjectFromEmployee(@CurrentUser User user) {
+        return projectService.getAllProjectForEmployee(user);
+    }
 
 }
