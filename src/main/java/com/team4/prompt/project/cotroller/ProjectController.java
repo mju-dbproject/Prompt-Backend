@@ -1,8 +1,10 @@
 package com.team4.prompt.project.cotroller;
 
+import com.team4.prompt.common.CurrentUser;
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
 import com.team4.prompt.project.cotroller.dto.ProjectListDto;
 import com.team4.prompt.project.service.ProjectService;
+import com.team4.prompt.user.model.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,5 +45,19 @@ public class ProjectController {
         return projectService.getDoneProject();
     }
 
+    @GetMapping("/all")
+    public ProjectListDto getAllProjectFromEmployee(@CurrentUser User user) {
+        return projectService.getAllProjectForEmployee(user);
+    }
+
+    @GetMapping("/in-progress")
+    public ProjectListDto getInProgressProjectFromEmployee(@CurrentUser User user) {
+        return projectService.getInProgressProjectForEmployee(user);
+    }
+
+    @GetMapping("/done")
+    public ProjectListDto getDoneProjectFromEmployee(@CurrentUser User user) {
+        return projectService.getDoneProjectForEmployee(user);
+    }
 
 }
