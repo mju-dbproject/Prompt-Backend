@@ -1,7 +1,9 @@
 package com.team4.prompt.project.service;
 
 import com.team4.prompt.manpower.domain.ManPower;
+import com.team4.prompt.manpower.domain.Task;
 import com.team4.prompt.manpower.repository.ManpowerRepository;
+import com.team4.prompt.manpower.service.ManpowerService;
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
 import com.team4.prompt.project.cotroller.dto.ProjectDto;
 import com.team4.prompt.project.cotroller.dto.ProjectListDto;
@@ -9,6 +11,7 @@ import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.project.repository.ProjectRepository;
 import com.team4.prompt.user.model.User;
+import com.team4.prompt.user.service.UserService;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final ManpowerRepository manpowerRepository;
+    private final UserService userService;
 
     @Transactional
     public void createProject(ProjectCreateRequest projectCreateRequest) {
@@ -37,6 +41,17 @@ public class ProjectService {
 
         int createOrder = projectRepository.findCreateCountInMonth(now);
         newProject.giveProjectNumber(createOrder);
+        projectCreateRequest.getEmployeeList().forEach(projectEmployee -> {
+            User user = userService.findUserById(projectEmployee.getId());
+            ManPower manPower = ManPower
+                    .builder()
+                    .project(newProject)
+                    .user(user)
+                    .task(Task.of(projectEmployee.getTask()))
+                    .startDate(LocalDateTime.now())
+                    .build();
+            newProject.addManpower(manPower);
+        });
         projectRepository.save(newProject);
     }
 
