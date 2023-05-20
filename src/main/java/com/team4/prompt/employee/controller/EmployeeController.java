@@ -4,9 +4,7 @@ import com.team4.prompt.employee.controller.dto.EmployeeListDto;
 import com.team4.prompt.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -27,4 +25,9 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     public EmployeeListDto getElseEmployee(){ return employeeService.getElseEmployee();}
 
+    @PostMapping("/admin/promotion")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void promoteEmployee(@RequestParam String userId) throws Exception {
+        employeeService.promoteEmployee(userId);
+    }
 }
