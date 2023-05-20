@@ -1,5 +1,6 @@
 package com.team4.prompt.user.controller;
 
+
 import com.team4.prompt.user.controller.dto.UserCreateRequest;
 import com.team4.prompt.user.controller.dto.UserInfoDto;
 import com.team4.prompt.user.controller.dto.UserUpdateDto;
@@ -26,8 +27,8 @@ public class UserController {
 
     //아이디 중복체크
     @GetMapping("/check-id")
-    public boolean checkId(@RequestBody String userId) {
-        return userService.checkId(userId);
+    public boolean checkId(@RequestParam String userId) {
+        return userService.checkId(userId);  //true: 중복없음
     }
 
     //@PutMapping("/password")
