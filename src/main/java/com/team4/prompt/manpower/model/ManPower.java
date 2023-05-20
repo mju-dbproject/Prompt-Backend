@@ -1,4 +1,4 @@
-package com.team4.prompt.manpower;
+package com.team4.prompt.manpower.model;
 
 import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.user.model.User;

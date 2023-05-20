@@ -1,6 +1,6 @@
 package com.team4.prompt.project.domain;
 
-import com.team4.prompt.manpower.ManPower;
+import com.team4.prompt.manpower.model.ManPower;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
