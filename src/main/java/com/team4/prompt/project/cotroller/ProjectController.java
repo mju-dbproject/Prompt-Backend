@@ -19,26 +19,29 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-    @PostMapping
+    @PostMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public void createProject(@RequestBody @Valid ProjectCreateRequest projectCreateRequest) {
         projectService.createProject(projectCreateRequest);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/admin/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ProjectListDto getAllProject(){
         return projectService.getAllProject();
     }
 
-    @GetMapping("/in-progress")
+    @GetMapping("admin/in-progress")
     @PreAuthorize("hasRole('ADMIN')")
     public ProjectListDto getInProgressProject() {
         return projectService.getInProgressProject();
     }
 
-    @GetMapping("/done")
+    @GetMapping("admin/done")
+    @PreAuthorize("hasRole('ADMIN')")
     public ProjectListDto getDoneProject() {
         return projectService.getDoneProject();
     }
+
+
 }
