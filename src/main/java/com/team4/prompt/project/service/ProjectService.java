@@ -70,4 +70,12 @@ public class ProjectService {
                 .map(ProjectDto::new).toList();
         return new ProjectListDto(projectDtoList);
     }
+
+    public ProjectListDto getDoneProjectForEmployee(User user) {
+        List<ManPower> manpowerList = manpowerRepository.findByUser(user);
+        List<ProjectDto> projectDtoList = manpowerList.stream().map(ManPower::getProject)
+                .filter(project -> project.getStatus().equals(ProjectStatus.FINISH))
+                .map(ProjectDto::new).toList();
+        return new ProjectListDto(projectDtoList);
+    }
 }

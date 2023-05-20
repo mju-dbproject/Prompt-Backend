@@ -55,5 +55,10 @@ public class ProjectController {
         return projectService.getInProgressProjectForEmployee(user);
     }
 
+    @GetMapping("/done")
+    public ProjectListDto getDoneProjectFromEmployee(@CurrentUser User user) {
+        return projectService.getDoneProjectForEmployee(user);
+    }
+
 
 }
