@@ -36,6 +36,7 @@ public class UserCreateRequest {
     @NotBlank
     private String rank;
 
+
     public User newUser(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .userId(userId)
