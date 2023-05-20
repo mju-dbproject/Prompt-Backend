@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findById(Long id);
     Optional<User> findByUserId(String userId);
 
     @Query("select count(*) from User where date_format(:now, '%Y') = year(enteringDate)")

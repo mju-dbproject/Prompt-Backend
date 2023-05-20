@@ -18,6 +18,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public User findUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException(""));
+    }
+
     public User findByUserId(String userId) {
         return userRepository.findByUserId(userId)
                 .orElseThrow(()-> new IllegalArgumentException(""));

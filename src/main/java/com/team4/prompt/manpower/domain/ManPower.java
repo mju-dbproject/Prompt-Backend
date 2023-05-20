@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -39,4 +40,12 @@ public class ManPower {
 
     private LocalDateTime endDate;
 
+    @Builder
+    public ManPower(Task task, User user, Project project, LocalDateTime startDate, LocalDateTime endDate) {
+        this.task = task;
+        this.user = user;
+        this.project = project;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }

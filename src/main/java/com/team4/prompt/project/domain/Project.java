@@ -71,6 +71,10 @@ public class Project {
         this.deleted = deleted;
     }
 
+    public void addManpower(ManPower manPower) {
+        this.manPowerList.add(manPower);
+    }
+
     public void giveProjectNumber(int createOrder){
         String projectNumber = createDate.getYear() % 100
                 + convertMonthToString(createDate.getMonthValue())
