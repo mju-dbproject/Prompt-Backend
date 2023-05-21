@@ -34,9 +34,10 @@ public class UserService {
         return userRepository.findByUserId(userId).isEmpty();
     }
 
-    public void updateUserInfo(String employeeNumber, UserUpdateDto userUpdateDto) {
-        User user = userRepository.findByEmployeeNumber(employeeNumber)
-                .orElseThrow(()-> new IllegalArgumentException("회원이 존재하지 않습니다."));
+    public void updateUserInfo(User currentUser, UserUpdateDto userUpdateDto) {
+        String userId = currentUser.getUserId();
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(()-> new IllegalArgumentException(""));
 
         userUpdateDto.name().ifPresent(user::updateName);
         userUpdateDto.email().ifPresent(user::updateEmail);
@@ -46,9 +47,23 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public UserInfoDto getMyInfo(String employeeNumber) {
-        User user = userRepository.findByEmployeeNumber(employeeNumber)
-                .orElseThrow(()-> new IllegalArgumentException("회원이 존재하지 않습니다."));
+    //public void changePassword(String userId, String checkPassword, String newPassword) {
+    //    User user = userRepository.findByUserId(userId)
+    //            .orElseThrow(()-> new IllegalArgumentException(""));
+
+    //    if (!user.matchPassword(passwordEncoder, checkPassword)) {
+    //        throw new IllegalArgumentException("");
+    //    }
+
+    //    user.updatePassword(passwordEncoder, newPassword);
+    //    userRepository.save(user);
+
+    //}
+
+    public UserInfoDto getMyInfo(User currentUser) {
+        String userId = currentUser.getUserId();
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(()-> new IllegalArgumentException(""));
 
         return new UserInfoDto(user);
     }
