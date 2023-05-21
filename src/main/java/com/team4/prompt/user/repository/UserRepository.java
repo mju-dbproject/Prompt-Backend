@@ -9,10 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUserId(String userId);
+    Optional<User> findById(Long id);
     Optional<User> findByEmployeeNumber(String employeeNumber);
     Optional<User> findByNameAndEmail(String name, String email);
 
     @Query("select count(*) from User where date_format(:now, '%Y') = year(enteringDate)")
-    int findEnteringCountInYear(LocalDateTime now);
-
+    Integer findEnteringCountInYear(LocalDateTime now);
 }

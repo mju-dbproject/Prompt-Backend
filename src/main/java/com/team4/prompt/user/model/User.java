@@ -1,8 +1,19 @@
 package com.team4.prompt.user.model;
 
-import jakarta.persistence.*;
-
+import com.team4.prompt.manpower.domain.ManPower;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,8 +21,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
-@Table(name = "employee")
 @Getter
+@Table(name = "employee")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
@@ -63,6 +74,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ManPower> manPowerList = new ArrayList<>();
+
     @Column(nullable = false)
     private boolean approved;
 
@@ -105,6 +119,7 @@ public class User {
         }
         return String.valueOf(enteringOrder);
     }
+
     public void updatePassword(PasswordEncoder passwordEncoder, String password) {
         this.password = passwordEncoder.encode(password);
     }
@@ -124,6 +139,5 @@ public class User {
     public void updateSkill(String skill) {
         this.skill = skill;
     }
-
 
 }

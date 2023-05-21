@@ -1,6 +1,5 @@
 package com.team4.prompt.user.service;
 
-import com.team4.prompt.config.SecurityConfig;
 import com.team4.prompt.user.controller.dto.UserInfoDto;
 import com.team4.prompt.user.controller.dto.UserUpdateDto;
 import com.team4.prompt.user.model.User;
@@ -8,8 +7,6 @@ import com.team4.prompt.user.repository.UserRepository;
 import java.time.LocalDateTime;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +18,13 @@ public class UserService {
 
     public void join(User user) {
         int enteringOrderInYear = userRepository.findEnteringCountInYear(LocalDateTime.now());
-        System.out.println(enteringOrderInYear);
         user.giveEmployeeNumber(enteringOrderInYear);
         userRepository.save(user);
+    }
+
+    public User findUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException(""));
     }
 
     public User findByUserId(String userId) {
@@ -75,8 +76,3 @@ public class UserService {
 
 
 }
-
-
-
-
-

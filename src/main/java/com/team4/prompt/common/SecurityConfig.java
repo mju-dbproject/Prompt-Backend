@@ -1,4 +1,4 @@
-package com.team4.prompt.config;
+package com.team4.prompt.common;
 
 import com.team4.prompt.auth.jwt.JwtAuthFilter;
 import com.team4.prompt.auth.jwt.JwtProvider;
@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private static final String API_PREFIX = "/api";
