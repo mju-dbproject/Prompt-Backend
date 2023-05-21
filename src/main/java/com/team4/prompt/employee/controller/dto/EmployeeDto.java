@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EmployeeDto {
+    private String employeeNumber;
     private String name;
     private String skill;
     private Rank rank;
@@ -18,6 +19,7 @@ public class EmployeeDto {
     private Boolean approved;
 
     public EmployeeDto(User user){
+        this.employeeNumber = user.getEmployeeNumber();
         this.name = user.getName();
         this.skill = user.getSkill();
         this.rank = user.getRank();
