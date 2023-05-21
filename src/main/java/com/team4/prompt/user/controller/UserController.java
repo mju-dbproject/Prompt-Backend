@@ -4,11 +4,9 @@ import com.team4.prompt.user.controller.dto.UserCreateRequest;
 import com.team4.prompt.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,4 +20,20 @@ public class UserController {
     public void join(@RequestBody @Valid UserCreateRequest userCreateRequest) {
         userService.join(userCreateRequest.newUser(passwordEncoder));
     }
+
+    //아이디 중복체크
+    @GetMapping("/check-id")
+    public boolean checkId(@RequestBody String userId) {
+        return userService.checkId(userId);  //true: 중복없음
+    }
+
+    //@PutMapping("/password")
+    //public void changePassword(String userId,
+    //                           @RequestParam("checkPassword") String checkPassword,
+    //                           @RequestParam("newPassword") String newPassword) {
+
+    //    userServiceImpl.changePassword(userId, checkPassword, newPassword);
+    //}
+
+
 }
