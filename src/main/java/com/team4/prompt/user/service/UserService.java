@@ -27,4 +27,10 @@ public class UserService {
         return userRepository.findByUserId(userId)
                 .orElseThrow(()-> new IllegalArgumentException(""));
     }
+
+    public boolean checkId(String userId) {
+        return userRepository.findByUserId(userId).isEmpty();
+    }
+
+
 }
