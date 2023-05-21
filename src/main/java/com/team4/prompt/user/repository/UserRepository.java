@@ -2,6 +2,7 @@ package com.team4.prompt.user.repository;
 
 import com.team4.prompt.user.model.Position;
 import com.team4.prompt.user.model.Rank;
+import com.team4.prompt.user.model.Role;
 import com.team4.prompt.user.model.User;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByEmployeeNumberContaining(String employeeNumber);
     List<User> findByRankContaining(Rank rank);
     List<User> findByPositionContaining(Position position);
+    List<User> findAllByRoleNot(Role role);
 
     Optional<User> findById(Long id);
     Optional<User> findByUserId(String userId);
