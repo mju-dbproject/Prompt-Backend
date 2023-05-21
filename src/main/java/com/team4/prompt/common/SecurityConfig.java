@@ -33,7 +33,8 @@ public class SecurityConfig {
                 .requestMatchers(
                         API_PREFIX + "/user/join",
                         API_PREFIX + "/auth/login",
-                        API_PREFIX + "/user/check-id"
+                        API_PREFIX + "/user/check-id",
+                        API_PREFIX + "/user/find-id"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
