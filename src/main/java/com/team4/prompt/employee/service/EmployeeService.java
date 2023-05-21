@@ -3,6 +3,7 @@ package com.team4.prompt.employee.service;
 import com.team4.prompt.employee.controller.dto.EmployeeDto;
 import com.team4.prompt.employee.controller.dto.EmployeeListDto;
 import com.team4.prompt.user.model.Position;
+import com.team4.prompt.user.model.Rank;
 import com.team4.prompt.user.model.Role;
 import com.team4.prompt.user.model.User;
 import com.team4.prompt.user.repository.UserRepository;
@@ -46,5 +47,21 @@ public class EmployeeService {
         }else {
             throw new Exception();
         }
+    }
+
+    public EmployeeListDto searchByEmployeeNumber(String type, String keyword) {
+        List<User> employeeList;
+        switch (type) {
+            case "name" -> employeeList = userRepository.findByNameContaining(keyword);
+            case "employeeNumber" -> employeeList = userRepository.findByEmployeeNumberContaining(keyword);
+            case "rank" -> employeeList = userRepository.findByRankContaining(Rank.of(keyword));
+            case "position" -> employeeList = userRepository.findByPositionContaining(Position.of(keyword));
+            default -> {
+                return new EmployeeListDto(List.of());
+            }
+        }
+
+        List<EmployeeDto> employeeDtoList = employeeList.stream().map(EmployeeDto::new).toList();
+        return new EmployeeListDto(employeeDtoList);
     }
 }

@@ -25,6 +25,10 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     public EmployeeListDto getElseEmployee(){ return employeeService.getElseEmployee();}
 
+    @GetMapping("/admin/search/")
+    @PreAuthorize("hasRole('ADMIN')")
+    public EmployeeListDto searchEmployee(@RequestParam String type, @RequestParam String keyword){ return  employeeService.searchByEmployeeNumber(type, keyword);}
+
     @PostMapping("/admin/promotion")
     @PreAuthorize("hasRole('ADMIN')")
     public void promoteEmployee(@RequestParam String userId) throws Exception {
