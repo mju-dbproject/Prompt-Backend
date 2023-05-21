@@ -25,9 +25,9 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN')")
     public EmployeeListDto getElseEmployee(){ return employeeService.getElseEmployee();}
 
-    @GetMapping("/admin/search/")
+    @GetMapping("/admin/search")
     @PreAuthorize("hasRole('ADMIN')")
-    public EmployeeListDto searchEmployee(@RequestParam String type, @RequestParam String keyword){ return  employeeService.searchByEmployeeNumber(type, keyword);}
+    public EmployeeListDto searchEmployee(@RequestParam String type, @RequestParam String keyword){ return  employeeService.searchEmployee(type, keyword);}
 
     @PostMapping("/admin/promotion")
     @PreAuthorize("hasRole('ADMIN')")
