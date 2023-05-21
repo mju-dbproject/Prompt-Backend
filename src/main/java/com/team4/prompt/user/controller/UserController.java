@@ -2,6 +2,7 @@ package com.team4.prompt.user.controller;
 
 import com.team4.prompt.user.controller.dto.UserCreateRequest;
 import com.team4.prompt.user.controller.dto.UserInfoDto;
+import com.team4.prompt.user.controller.dto.UserUpdateDto;
 import com.team4.prompt.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,11 @@ public class UserController {
     //    userServiceImpl.changePassword(userId, checkPassword, newPassword);
     //}
 
+    //내 정보 수정
+    @PutMapping("/info/{employeeNumber}")  //공백일 경우에도 update됨
+    public void updateUserInfo(@PathVariable String employeeNumber, @Valid @RequestBody UserUpdateDto userUpdateDto) {
+        userService.updateUserInfo(employeeNumber, userUpdateDto);
+    }
     @GetMapping("/info/{employeeNumber}")
     public UserInfoDto getMyInfo(@PathVariable String employeeNumber) {
         return userService.getMyInfo(employeeNumber);

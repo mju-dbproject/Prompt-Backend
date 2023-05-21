@@ -118,4 +118,18 @@ public class User {
         }
         return String.valueOf(enteringOrder);
     }
+
+    //user정보 수정
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+    public void updateName(String name) {
+        this.name = name;
+    }
+    public void updatePhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public void updateSkill(String skill) {
+        this.skill = skill;
+    }
 }
