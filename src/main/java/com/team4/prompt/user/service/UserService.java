@@ -47,19 +47,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    //public void changePassword(String userId, String checkPassword, String newPassword) {
-    //    User user = userRepository.findByUserId(userId)
-    //            .orElseThrow(()-> new IllegalArgumentException(""));
-
-    //    if (!user.matchPassword(passwordEncoder, checkPassword)) {
-    //        throw new IllegalArgumentException("");
-    //    }
-
-    //    user.updatePassword(passwordEncoder, newPassword);
-    //    userRepository.save(user);
-
-    //}
-
     public UserInfoDto getMyInfo(User currentUser) {
         String userId = currentUser.getUserId();
         User user = userRepository.findByUserId(userId)
@@ -75,4 +62,16 @@ public class UserService {
         return user.getUserId();
     }
 
+    //public void approveUser(@CurrentUser User currentUser) {
+    //    String userId = currentUser.getUserId();
+    //    User user = userRepository.findByUserId(userId)
+    //      .orElseThrow(()-> new IllegalArgumentException(""));
+
+    //    if(user.isApproved()) {
+    //        throw new IllegalArgumentException("");
+    //    }
+
+    //    user.updateApproved(true);
+    //    userRepository.save(user);
+    //}
 }
