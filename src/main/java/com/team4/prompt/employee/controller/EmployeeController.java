@@ -2,6 +2,8 @@ package com.team4.prompt.employee.controller;
 
 import com.team4.prompt.employee.controller.dto.EmployeeListDto;
 import com.team4.prompt.employee.service.EmployeeService;
+import com.team4.prompt.user.model.User;
+import com.team4.prompt.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+
+    private final UserService userService;
 
     @GetMapping("/admin/all")
     @PreAuthorize("hasRole('ADMIN')")
@@ -31,7 +35,8 @@ public class EmployeeController {
 
     @PostMapping("/admin/promotion")
     @PreAuthorize("hasRole('ADMIN')")
-    public void promoteEmployee(@RequestParam String userId) throws Exception {
-        employeeService.promoteEmployee(userId);
+    public void promoteEmployee(@RequestBody String userId) {
+        User clickedEmployee = userService.findByUserId(userId);
+        employeeService.promoteEmployee(clickedEmployee);
     }
 }

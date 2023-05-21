@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -40,13 +39,9 @@ public class EmployeeService {
         return new EmployeeListDto(employeeDtoList);
     }
 
-    public void promoteEmployee(String userId) throws Exception {
-        Optional<User> clickedEmployee = userRepository.findByUserId(userId);
-        if (clickedEmployee.isPresent()){
-            clickedEmployee.get().promoteEmployee(userId,Role.ADMIN);
-        }else {
-            throw new Exception();
-        }
+    public void promoteEmployee(User user){
+        user.promoteEmployee(user.getUserId(),Role.ADMIN);
+        userRepository.save(user);
     }
 
     public EmployeeListDto searchEmployee(String type, String keyword) {
