@@ -49,7 +49,7 @@ public class EmployeeService {
         }
     }
 
-    public EmployeeListDto searchByEmployeeNumber(String type, String keyword) {
+    public EmployeeListDto searchEmployee(String type, String keyword) {
         List<User> employeeList;
         switch (type) {
             case "name" -> employeeList = userRepository.findByNameContaining(keyword);
