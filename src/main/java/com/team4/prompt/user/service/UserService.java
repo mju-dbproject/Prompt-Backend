@@ -1,5 +1,6 @@
 package com.team4.prompt.user.service;
 
+import com.team4.prompt.user.controller.dto.UserInfoDto;
 import com.team4.prompt.user.model.User;
 import com.team4.prompt.user.repository.UserRepository;
 import java.time.LocalDateTime;
@@ -32,5 +33,10 @@ public class UserService {
         return userRepository.findByUserId(userId).isEmpty();
     }
 
+    public UserInfoDto getMyInfo(String employeeNumber) {
+        User user = userRepository.findByEmployeeNumber(employeeNumber)
+                .orElseThrow(()-> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
+        return new UserInfoDto(user);
+    }
 }
