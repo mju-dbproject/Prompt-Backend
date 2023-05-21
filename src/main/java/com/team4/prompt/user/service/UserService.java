@@ -1,5 +1,6 @@
 package com.team4.prompt.user.service;
 
+import com.team4.prompt.config.SecurityConfig;
 import com.team4.prompt.user.controller.dto.UserInfoDto;
 import com.team4.prompt.user.controller.dto.UserUpdateDto;
 import com.team4.prompt.user.model.User;
@@ -7,6 +8,8 @@ import com.team4.prompt.user.repository.UserRepository;
 import java.time.LocalDateTime;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +36,7 @@ public class UserService {
     }
     public void updateUserInfo(String employeeNumber, UserUpdateDto userUpdateDto) {
         User user = userRepository.findByEmployeeNumber(employeeNumber)
-                .orElseThrow(()-> new IllegalArgumentException("회원이 존재하지 않습니다."));
+                .orElseThrow(()-> new IllegalArgumentException(""));    //메세지 적어야 하는지?
 
         userUpdateDto.name().ifPresent(user::updateName);
         userUpdateDto.email().ifPresent(user::updateEmail);
@@ -45,10 +48,10 @@ public class UserService {
 
     //public void changePassword(String userId, String checkPassword, String newPassword) {
     //    User user = userRepository.findByUserId(userId)
-    //            .orElseThrow(()-> new IllegalArgumentException("회원이 존재하지 않습니다."));
+    //            .orElseThrow(()-> new IllegalArgumentException(""));
 
     //    if (!user.matchPassword(passwordEncoder, checkPassword)) {
-            //예외처리
+    //        throw new IllegalArgumentException("");
     //    }
 
     //    user.updatePassword(passwordEncoder, newPassword);
@@ -58,9 +61,16 @@ public class UserService {
 
     public UserInfoDto getMyInfo(String employeeNumber) {
         User user = userRepository.findByEmployeeNumber(employeeNumber)
-                .orElseThrow(()-> new IllegalArgumentException("회원이 존재하지 않습니다."));
+                .orElseThrow(()-> new IllegalArgumentException(""));
 
         return new UserInfoDto(user);
+    }
+
+    public String findUserIdByNameAndEmail(String name, String email) {
+        User user = userRepository.findByNameAndEmail(name, email)
+                .orElseThrow(() -> new IllegalArgumentException(""));
+
+        return user.getUserId();
     }
 
 

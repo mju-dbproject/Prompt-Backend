@@ -32,10 +32,10 @@ public class UserController {
 
     //@PutMapping("/password")
     //public void changePassword(String userId,
-    //                           @RequestParam("checkPassword") String checkPassword,
-    //                           @RequestParam("newPassword") String newPassword) {
+    //                           @RequestParam String checkPassword,
+    //                          @RequestParam String newPassword) {
 
-    //    userServiceImpl.changePassword(userId, checkPassword, newPassword);
+    //    userService.changePassword(userId, checkPassword, newPassword);
     //}
 
     //내 정보 수정
@@ -48,5 +48,11 @@ public class UserController {
     @GetMapping("/info/{employeeNumber}")
     public UserInfoDto getMyInfo(@PathVariable String employeeNumber) {
         return userService.getMyInfo(employeeNumber);
+    }
+
+    //아이디찾기
+    @GetMapping("/find-id")
+    public String findUserId(@RequestParam String name, @RequestParam String email) {
+        return userService.findUserIdByNameAndEmail(name, email);
     }
 }
