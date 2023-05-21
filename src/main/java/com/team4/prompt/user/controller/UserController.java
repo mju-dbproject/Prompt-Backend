@@ -46,5 +46,11 @@ public class UserController {
     public UserInfoDto getMyInfo(@PathVariable String employeeNumber) {
         return userService.getMyInfo(employeeNumber);
     }
+
+    //아이디찾기
+    @GetMapping("/find-id")
+    public String findUserId(@RequestParam String name, @RequestParam String email) {
+        return userService.findUserIdByNameAndEmail(name, email);
+    }
 }
 

@@ -52,4 +52,12 @@ public class UserService {
 
         return new UserInfoDto(user);
     }
+
+    public String findUserIdByNameAndEmail(String name, String email) {
+        User user = userRepository.findByNameAndEmail(name, email)
+                .orElseThrow(() -> new IllegalArgumentException(""));
+
+        return user.getUserId();
+    }
+
 }
