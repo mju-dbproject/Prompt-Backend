@@ -1,9 +1,12 @@
 package com.team4.prompt.user.controller;
 
 
+import com.team4.prompt.common.CurrentUser;
+import com.team4.prompt.user.controller.dto.FindUserIdRequest;
 import com.team4.prompt.user.controller.dto.UserCreateRequest;
 import com.team4.prompt.user.controller.dto.UserInfoDto;
 import com.team4.prompt.user.controller.dto.UserUpdateDto;
+import com.team4.prompt.user.model.User;
 import com.team4.prompt.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +29,7 @@ public class UserController {
 
     //아이디 중복체크
     @GetMapping("/check-id")
-    public boolean checkId(@RequestParam String userId) {
+    public boolean checkId(@RequestBody String userId) {
         return userService.checkId(userId);  //true: 중복없음
     }
 
@@ -39,20 +42,20 @@ public class UserController {
     //}
 
     //내 정보 수정
-    @PutMapping("/info/{employeeNumber}")  //공백일 경우에도 update됨
-    public void updateUserInfo(@PathVariable String employeeNumber, @Valid @RequestBody UserUpdateDto userUpdateDto) {
-        userService.updateUserInfo(employeeNumber, userUpdateDto);
+    @PutMapping("/info")
+    public void updateUserInfo(@CurrentUser User user, @RequestBody UserUpdateDto userUpdateDto) {
+        userService.updateUserInfo(user, userUpdateDto);
     }
 
     //내 정보 조회
-    @GetMapping("/info/{employeeNumber}")
-    public UserInfoDto getMyInfo(@PathVariable String employeeNumber) {
-        return userService.getMyInfo(employeeNumber);
+    @GetMapping("/info")
+    public UserInfoDto getMyInfo(@CurrentUser User currentUser) {
+        return userService.getMyInfo(currentUser);
     }
 
     //아이디찾기
-    @GetMapping("/find-id")
-    public String findUserId(@RequestParam String name, @RequestParam String email) {
-        return userService.findUserIdByNameAndEmail(name, email);
+    @PostMapping("/find-id")
+    public String findUserId(@RequestBody FindUserIdRequest findUserIdRequest) {
+        return userService.findUserIdByNameAndEmail(findUserIdRequest.getName(), findUserIdRequest.getEmail());
     }
 }

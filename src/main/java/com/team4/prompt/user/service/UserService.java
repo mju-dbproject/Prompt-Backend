@@ -6,6 +6,7 @@ import com.team4.prompt.user.model.User;
 import com.team4.prompt.user.repository.UserRepository;
 import java.time.LocalDateTime;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,9 +36,10 @@ public class UserService {
     public boolean checkId(String userId) {
         return userRepository.findByUserId(userId).isEmpty();
     }
-    public void updateUserInfo(String employeeNumber, UserUpdateDto userUpdateDto) {
-        User user = userRepository.findByEmployeeNumber(employeeNumber)
-                .orElseThrow(()-> new IllegalArgumentException(""));    //메세지 적어야 하는지?
+    public void updateUserInfo(User currentUser, UserUpdateDto userUpdateDto) {
+        String userId = currentUser.getUserId();
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(()-> new IllegalArgumentException(""));
 
         userUpdateDto.name().ifPresent(user::updateName);
         userUpdateDto.email().ifPresent(user::updateEmail);
@@ -60,8 +62,9 @@ public class UserService {
 
     //}
 
-    public UserInfoDto getMyInfo(String employeeNumber) {
-        User user = userRepository.findByEmployeeNumber(employeeNumber)
+    public UserInfoDto getMyInfo(User currentUser) {
+        String userId = currentUser.getUserId();
+        User user = userRepository.findByUserId(userId)
                 .orElseThrow(()-> new IllegalArgumentException(""));
 
         return new UserInfoDto(user);
