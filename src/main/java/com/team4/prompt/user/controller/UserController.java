@@ -1,11 +1,9 @@
 package com.team4.prompt.user.controller;
 
 import com.team4.prompt.common.CurrentUser;
-import com.team4.prompt.user.controller.dto.FindUserIdRequest;
-import com.team4.prompt.user.controller.dto.UserCreateRequest;
-import com.team4.prompt.user.controller.dto.UserInfoDto;
-import com.team4.prompt.user.controller.dto.UserUpdateDto;
+import com.team4.prompt.user.controller.dto.*;
 import com.team4.prompt.user.model.User;
+import com.team4.prompt.user.service.UserPasswordService;
 import com.team4.prompt.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +17,8 @@ public class UserController {
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final UserPasswordService userPasswordService;
+
 
     @PostMapping("/join")
     public void join(@RequestBody @Valid UserCreateRequest userCreateRequest) {
@@ -31,13 +31,12 @@ public class UserController {
         return userService.checkId(userId);  //true: 중복없음
     }
 
-    //@PutMapping("/password")
-    //public void changePassword(String userId,
-    //                           @RequestParam("checkPassword") String checkPassword,
-    //                           @RequestParam("newPassword") String newPassword) {
+    @PutMapping("/password")
+    public void changePassword(@CurrentUser User user,
+                               @RequestBody ChangePasswordRequest changePasswordRequest) {
 
-    //    userServiceImpl.changePassword(userId, checkPassword, newPassword);
-    //}
+        userPasswordService.changePassword(user, changePasswordRequest);
+    }
 
     //내 정보 수정
     @PutMapping("/info")
@@ -56,5 +55,11 @@ public class UserController {
     public String findUserId(@RequestBody FindUserIdRequest findUserIdRequest) {
         return userService.findUserIdByNameAndEmail(findUserIdRequest.getName(), findUserIdRequest.getEmail());
     }
+
+    //@PostMapping("/approval")
+    //@PreAuthorize("hasRole('ADMIN')")
+    //public void setApproveUser(@CurrentUser User user) {
+    //    userService.approveUser(user);
+    //}
 }
 
