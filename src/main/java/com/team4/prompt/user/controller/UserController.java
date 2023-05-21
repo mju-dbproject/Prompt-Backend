@@ -2,14 +2,13 @@ package com.team4.prompt.user.controller;
 
 
 import com.team4.prompt.common.CurrentUser;
-import com.team4.prompt.user.controller.dto.FindUserIdRequest;
-import com.team4.prompt.user.controller.dto.UserCreateRequest;
-import com.team4.prompt.user.controller.dto.UserInfoDto;
-import com.team4.prompt.user.controller.dto.UserUpdateDto;
+import com.team4.prompt.user.controller.dto.*;
 import com.team4.prompt.user.model.User;
+import com.team4.prompt.user.service.UserPasswordService;
 import com.team4.prompt.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final UserPasswordService userPasswordService;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -33,13 +33,12 @@ public class UserController {
         return userService.checkId(userId);  //true: 중복없음
     }
 
-    //@PutMapping("/password")
-    //public void changePassword(String userId,
-    //                           @RequestParam String checkPassword,
-    //                          @RequestParam String newPassword) {
+    @PutMapping("/password")
+    public void changePassword(@CurrentUser User user,
+                               @RequestBody ChangePasswordRequest changePasswordRequest) {
 
-    //    userService.changePassword(userId, checkPassword, newPassword);
-    //}
+        userPasswordService.changePassword(user, changePasswordRequest);
+    }
 
     //내 정보 수정
     @PutMapping("/info")
@@ -49,8 +48,8 @@ public class UserController {
 
     //내 정보 조회
     @GetMapping("/info")
-    public UserInfoDto getMyInfo(@CurrentUser User currentUser) {
-        return userService.getMyInfo(currentUser);
+    public UserInfoDto getMyInfo(@CurrentUser User user) {
+        return userService.getMyInfo(user);
     }
 
     //아이디찾기
@@ -58,4 +57,10 @@ public class UserController {
     public String findUserId(@RequestBody FindUserIdRequest findUserIdRequest) {
         return userService.findUserIdByNameAndEmail(findUserIdRequest.getName(), findUserIdRequest.getEmail());
     }
+
+    //@PostMapping("/approval")
+    //@PreAuthorize("hasRole('ADMIN')")
+    //public void setApproveUser(@CurrentUser User user) {
+    //    userService.approveUser(user);
+    //}
 }

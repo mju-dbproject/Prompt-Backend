@@ -123,9 +123,7 @@ public class User {
     public void updatePassword(PasswordEncoder passwordEncoder, String password) {
         this.password = passwordEncoder.encode(password);
     }
-    public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword) {
-        return passwordEncoder.matches(checkPassword, getPassword());
-    }
+
     //user정보 수정
     public void updateEmail(String email) {
         this.email = email;
