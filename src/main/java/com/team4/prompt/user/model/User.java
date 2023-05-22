@@ -18,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Getter
@@ -119,7 +120,26 @@ public class User {
         return String.valueOf(enteringOrder);
     }
 
+
     public void promoteEmployee(Role role){
         this.role = role;
+
+    public void updatePassword(PasswordEncoder passwordEncoder, String password) {
+        this.password = passwordEncoder.encode(password);
+    }
+
+    //user정보 수정
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+    public void updateName(String name) {
+        this.name = name;
+    }
+    public void updatePhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public void updateSkill(String skill) {
+        this.skill = skill;
+
     }
 }
