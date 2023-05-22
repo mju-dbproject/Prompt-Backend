@@ -17,7 +17,7 @@ public class ManpowerController {
 
     private final ManpowerService manpowerService;
 
-    @PostMapping("/admin/all")
+    @PostMapping("/admin/available/all")
     @PreAuthorize("hasRole('ADMIN')")
     public List<ManpowerDto> getAllManpower(@RequestBody String projectNumber){
         List<User> manpowerEmployees =  manpowerService.getAvailableEmployeeForProject(projectNumber);
