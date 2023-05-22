@@ -120,6 +120,10 @@ public class User {
         return String.valueOf(enteringOrder);
     }
 
+
+    public void promoteEmployee(Role role){
+        this.role = role;
+
     public void updatePassword(PasswordEncoder passwordEncoder, String password) {
         this.password = passwordEncoder.encode(password);
     }
@@ -136,5 +140,6 @@ public class User {
     }
     public void updateSkill(String skill) {
         this.skill = skill;
+
     }
 }
