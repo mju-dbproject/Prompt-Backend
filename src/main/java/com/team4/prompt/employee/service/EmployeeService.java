@@ -39,8 +39,9 @@ public class EmployeeService {
         return new EmployeeListDto(employeeDtoList);
     }
 
+    @Transactional
     public void promoteEmployee(User user){
-        user.promoteEmployee(user.getUserId(),Role.ADMIN);
+        user.promoteEmployee(Role.ADMIN);
         userRepository.save(user);
     }
 

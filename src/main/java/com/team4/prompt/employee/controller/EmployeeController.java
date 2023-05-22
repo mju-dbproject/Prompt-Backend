@@ -35,8 +35,8 @@ public class EmployeeController {
 
     @PostMapping("/admin/promotion")
     @PreAuthorize("hasRole('ADMIN')")
-    public void promoteEmployee(@RequestBody String userId) {
-        User clickedEmployee = userService.findByUserId(userId);
+    public void promoteEmployee(@RequestBody User user) {
+        User clickedEmployee = userService.findUserById(user.getId());
         employeeService.promoteEmployee(clickedEmployee);
     }
 }
