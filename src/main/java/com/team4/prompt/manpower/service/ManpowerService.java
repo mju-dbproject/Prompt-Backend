@@ -5,6 +5,7 @@ import com.team4.prompt.manpower.controller.dto.ManpowerListDto;
 import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.manpower.domain.Task;
 import com.team4.prompt.manpower.repository.ManpowerRepository;
+import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.user.model.Position;
 import com.team4.prompt.user.model.Rank;
 import com.team4.prompt.user.model.Role;
@@ -43,7 +44,7 @@ public class ManpowerService {
                     .anyMatch(manPower -> manPower.getUser().equals(employee));
             boolean isAssignedToPMPLTasks = manpowerRepository.findByUserAndTaskIn(employee,PMPLEmployees)
                     .stream()
-                    .anyMatch(manPower -> !manPower.getProject().getProjectNumber().equals(projectNumber));
+                    .anyMatch(manPower -> !manPower.getProject().getProjectNumber().equals(projectNumber) && manPower.getProject().getStatus() != ProjectStatus.FINISH);
             if (!isAssignedToProject && !isAssignedToPMPLTasks & isEmployeeAvailable(employee)){
                 availableEmployees.add(employee);
             }
@@ -68,7 +69,7 @@ public class ManpowerService {
                         .anyMatch(manPower -> manPower.getUser().equals(employee));
                 boolean isAssignedToPMPLTasks = manpowerRepository.findByUserAndTaskIn(employee,PMPLEmployees)
                         .stream()
-                        .anyMatch(manPower -> !manPower.getProject().getProjectNumber().equals(projectNumber));
+                        .anyMatch(manPower -> !manPower.getProject().getProjectNumber().equals(projectNumber) && manPower.getProject().getStatus() != ProjectStatus.FINISH);
                 if (!isAssignedToProject && !isAssignedToPMPLTasks & isEmployeeAvailable(employee)){
                     availableEmployees.add(employee);
                 }
@@ -85,7 +86,7 @@ public class ManpowerService {
         for (User employee : allEmployees) {
             boolean isAssignedToPMPLTasks = manpowerRepository.findByUserAndTaskIn(employee, PMPLEmployees)
                     .stream()
-                    .anyMatch(manPower -> manPower.getProject() != null);
+                    .anyMatch(manPower -> manPower.getProject() != null && manPower.getProject().getStatus() != ProjectStatus.FINISH);
             if (!isAssignedToPMPLTasks && isEmployeeAvailable(employee)) {
                 availableEmployees.add(employee);
             }
@@ -110,7 +111,7 @@ public class ManpowerService {
         for (User employee : allEmployees) {
             boolean isAssignedToPMPLTasks = manpowerRepository.findByUserAndTaskIn(employee, PMPLEmployees)
                     .stream()
-                    .anyMatch(manPower -> manPower.getProject() != null);
+                    .anyMatch(manPower -> manPower.getProject() != null && manPower.getProject().getStatus() != ProjectStatus.FINISH);
             if (!isAssignedToPMPLTasks && isEmployeeAvailable(employee)) {
                 availableEmployees.add(employee);
             }
