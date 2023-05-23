@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -40,16 +39,13 @@ public class EmployeeService {
         return new EmployeeListDto(employeeDtoList);
     }
 
-    public void promoteEmployee(String userId) throws Exception {
-        Optional<User> clickedEmployee = userRepository.findByUserId(userId);
-        if (clickedEmployee.isPresent()){
-            clickedEmployee.get().promoteEmployee(userId,Role.ADMIN);
-        }else {
-            throw new Exception();
-        }
+    @Transactional
+    public void promoteEmployee(User user){
+        user.promoteEmployee(Role.ADMIN);
+        userRepository.save(user);
     }
 
-    public EmployeeListDto searchByEmployeeNumber(String type, String keyword) {
+    public EmployeeListDto searchEmployee(String type, String keyword) {
         List<User> employeeList;
         switch (type) {
             case "name" -> employeeList = userRepository.findByNameContaining(keyword);
@@ -57,6 +53,7 @@ public class EmployeeService {
             case "rank" -> employeeList = userRepository.findByRankContaining(Rank.of(keyword));
             case "position" -> employeeList = userRepository.findByPositionContaining(Position.of(keyword));
             case "skill" -> employeeList = userRepository.findBySkillContainingIgnoreCase(keyword);
+
             default -> {
                 return new EmployeeListDto(List.of());
             }

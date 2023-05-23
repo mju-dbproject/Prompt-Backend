@@ -18,6 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByPositionNotAndApproved(Position position, boolean approved);
     List<User> findByNameContaining(String name);
     List<User> findByEmployeeNumberContaining(String employeeNumber);
+
     List<User> findByRankContaining(Rank rank);
     List<User> findByPositionContaining(Position position);
     List<User> findBySkillContainingIgnoreCase(String skill);
@@ -28,8 +29,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRoleNotAndRank(Role role, Rank rank);
     List<User> findByRoleNotAndSkillContainingIgnoreCase(Role role, String skill);
 
+    List<User> findByRank(Rank rank);
+    List<User> findByPosition(Position position);
+
+
     Optional<User> findById(Long id);
     Optional<User> findByUserId(String userId);
+    Optional<User> findByEmployeeNumber(String employeeNumber);
+    Optional<User> findByNameAndEmail(String name, String email);
+
+
 
     @Query("select count(*) from User where date_format(:now, '%Y') = year(enteringDate)")
     int findEnteringCountInYear(LocalDateTime now);
