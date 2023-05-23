@@ -20,6 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByEmployeeNumberContaining(String employeeNumber);
     List<User> findByRankContaining(Rank rank);
     List<User> findByPositionContaining(Position position);
+    List<User> findBySkillContainingIgnoreCase(String skill);
     List<User> findAllByRoleNot(Role role);
 
     Optional<User> findById(Long id);
