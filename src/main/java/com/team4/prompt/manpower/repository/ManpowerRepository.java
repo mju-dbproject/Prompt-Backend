@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ManpowerRepository extends JpaRepository<ManPower, Long> {
 
-    List<ManPower> findByProject_ProjectNumber(String projectNumber);
+    List<ManPower> findByProjectProjectNumber(String projectNumber);
     @Query("SELECT m FROM ManPower m WHERE m.user = :user AND m.task IN :tasks")
     List<ManPower> findByUserAndTaskIn(User user, List<Task> tasks);
     Optional<ManPower> findById(Long id);
