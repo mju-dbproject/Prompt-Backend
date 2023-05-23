@@ -19,7 +19,7 @@ public class ManpowerController {
         return manpowerService.getAvailableEmployeeForNewProject();
     }
 
-    @PostMapping("/admin/new/available/search")
+    @GetMapping("/admin/new/available/search")
     @PreAuthorize("hasRole('ADMIN')")
     public ManpowerListDto searchManpower(@RequestParam String type, String keyword){
         return manpowerService.searchAvailableManpowerForNewProject(type, keyword);
