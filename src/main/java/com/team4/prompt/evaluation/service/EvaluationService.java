@@ -13,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static com.team4.prompt.manpower.domain.Task.PM;
 
@@ -35,7 +37,6 @@ public class EvaluationService {
 
             if (project.getStatus() == ProjectStatus.FINISH) {
                 boolean isEvaluated = evaluationRepository.existsByProjectAndManPower(project, manpower);
-                //PM의 경우 PM평가 or 고객평가 하나만 해도 평가 완료된 걸로 처리
 
                 if (!isEvaluated) {
                     ProjectDto projectDto = new ProjectDto(project);
@@ -47,41 +48,47 @@ public class EvaluationService {
     }
 
     //관리자가 가능한 평가 종류
-    //public List<String> getAvailableEvaluationsForAdmin(User user) {
-    //    List<String> availableEvaluations = new ArrayList<>();
-    //    ManPower manPower = manpowerRepository.findByEmployeeId(user.getId());
+    public List<String> getAvailableEvaluationsForAdmin(Long projectId, User user) {
+        List<String> availableEvaluations = new ArrayList<>();
+        ManPower manPower = manpowerRepository.findByProjectIdAndUser(projectId, user);
 
-    //    if (manPower.getTask() == PM) {
-    //        availableEvaluations.add("PM 평가");
-    //        availableEvaluations.add("동료 평가");
-    //        availableEvaluations.add("고객 평가");
-    //    } else {
-    //        availableEvaluations.add("고객 평가");
-    //   }
-    //    return availableEvaluations;
-    //}
+        if (manPower.getTask() == PM) {
+            availableEvaluations.add("PM 평가");
+            availableEvaluations.add("동료 평가");
+            availableEvaluations.add("발주처 평가");
+        } else {
+            availableEvaluations.add("발주처 평가");
+       }
+        return availableEvaluations;
+    }
 
-    //public List<String> getAvailableEvaluationsForEmployee(User user) {
-    //    List<String> availableEvaluations = new ArrayList<>();
-     //   availableEvaluations.add("동료 평가");
+    public List<String> getAvailableEvaluationsForEmployee(User user) {
+        List<String> availableEvaluations = new ArrayList<>();
+        availableEvaluations.add("동료 평가");
 
-    //    return availableEvaluations;
-    //}
+        return availableEvaluations;
+    }
 
-    //public List<String> getProjectPeer(String projectNumber, User user) {
-    //    Project project = projectRepository.findByProjectNumber(projectNumber);
-    //    List<ManPower> peers = manpowerRepository.findPeersByProject(project);
+    public List<String> getProjectPeer(Long projectId, User user) {
+        Optional<Project> projectOptional = projectRepository.findById(projectId);
+        if (projectOptional.isEmpty()) {
+            // 프로젝트가 존재하지 않는 경우
+            return Collections.emptyList();
+        }
 
-    //    List<String> peerList = new ArrayList<>();
-    //    for (ManPower manPower : peers) {
-    //        if (!manPower.getUser().getId().equals(user.getId())) {  // 현재 사용자를 제외하고 추가
-    //            String peerInfo = manPower.getUser().getEmployeeNumber() + "+" + manPower.getUser().getName();
-    //            peerList.add(peerInfo);
-    //        }
-    //    }
+        Project project = projectOptional.get();
+        List<ManPower> peers = manpowerRepository.findPeersByProject(project);
 
-    //    return peerList;
-    //}
+        List<String> peerList = new ArrayList<>();
+        for (ManPower manPower : peers) {
+            if (!manPower.getUser().getId().equals(user.getId())) {  // 현재 사용자는 목록에서 제외
+                String peerInfo = manPower.getUser().getEmployeeNumber() + "+" + manPower.getUser().getName();
+                peerList.add(peerInfo);
+            }
+        }
+
+        return peerList;
+    }
 
     //선택된 프로젝트 정보 출력
     //public ProjectDto getProjectDetails(Long projectId) {   //전달 값?

@@ -8,10 +8,7 @@ import com.team4.prompt.user.model.User;
 import com.team4.prompt.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,21 +25,22 @@ public class EvaluationController {
         return evaluationService.getProjectsForEvaluation(user);
     }
 
-    //@GetMapping("/employee/list")
-    //public List<String> getProjectPeer(@PathVariable String projectNumber, @CurrentUser User user) {
-    //    return evaluationService.getProjectPeer(projectNumber, user);
-    //}
+    @GetMapping("/employee/list")
+    public List<String> getProjectPeer(@RequestBody Long projectId, @CurrentUser User user) {
+        return evaluationService.getProjectPeer(projectId, user);
+    }
 
-    //@GetMapping("/admin/type")
-    //@PreAuthorize("hasRole('ADMIN')")
-    //public List<String> gerEvaluationTypeForAdmin(@CurrentUser User user) {
-    //    return evaluationService.getAvailableEvaluationsForAdmin(user);
-    //}
+    @GetMapping("/admin/type")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<String> gerEvaluationTypeForAdmin(@RequestBody Long projectId, @CurrentUser User user) {
+        return evaluationService.getAvailableEvaluationsForAdmin(projectId, user);
+    }
 
-    //@GetMapping("/employee/type")
-    //public List<String> geteEvaluationsForEmployee(@CurrentUser User user) {
-    //    return evaluationService.getAvailableEvaluationsForEmployee(user);
-    //}
+    @GetMapping("/employee/type")
+    @PreAuthorize("hasRole('USER')")
+    public List<String> getEvaluationsForEmployee(@CurrentUser User user) {
+        return evaluationService.getAvailableEvaluationsForEmployee(user);
+    }
 
     //@GetMapping("/project/detail")
     //public ProjectDto getProjectDetails(@RequestBody Long projectId) {
