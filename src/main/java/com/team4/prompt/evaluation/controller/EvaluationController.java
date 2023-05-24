@@ -22,29 +22,22 @@ public class EvaluationController {
     private final UserService userService;
 
     @GetMapping("/project/list")
-    public ProjectListDto getProjectsForEvaluation(@CurrentUser User user) {
+    public List<ProjectDto> getProjectsForEvaluation(@CurrentUser User user) {
         return evaluationService.getProjectsForEvaluation(user);
     }
 
     @GetMapping("/employee/list")
-    public List<String> getProjectPeer(@RequestBody Long projectId, @CurrentUser User user) {
+    public List<String> getProjectPeer(@RequestParam Long projectId, @CurrentUser User user) {
         return evaluationService.getProjectPeer(projectId, user);
     }
 
-    @GetMapping("/admin/type")
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<String> gerEvaluationTypeForAdmin(@RequestBody Long projectId, @CurrentUser User user) {
-        return evaluationService.getAvailableEvaluationsForAdmin(projectId, user);
-    }
-
-    @GetMapping("/user/type")
-    @PreAuthorize("hasRole('USER')")
-    public List<String> getEvaluationsForEmployee(@CurrentUser User user) {
-        return evaluationService.getAvailableEvaluationsForEmployee(user);
+    @GetMapping("/type")
+    public List<String> gerEvaluationTypeForAdmin(@RequestParam Long projectId, @CurrentUser User user) {
+        return evaluationService.getAvailableEvaluations(projectId, user);
     }
 
     @GetMapping("/project/detail")
-    public ProjectDto getProjectDetails(@RequestBody Long projectId) {
+    public ProjectDto getProjectDetails(@RequestParam Long projectId) {
         return evaluationService.getProjectDetails(projectId);
     }
 
