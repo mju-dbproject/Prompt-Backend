@@ -122,7 +122,7 @@ public class User {
 
 
     public void promoteEmployee(Role role){
-        this.role = role;
+        this.role = role; }
 
     public void updatePassword(PasswordEncoder passwordEncoder, String password) {
         this.password = passwordEncoder.encode(password);
