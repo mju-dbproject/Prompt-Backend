@@ -3,10 +3,7 @@ package com.team4.prompt.evaluation.domain;
 import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.project.domain.Project;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -38,18 +35,18 @@ public class Evaluation {
     private String type;
 
     @Column(nullable = false)
-    private LocalDateTime end_date;
+    private LocalDateTime endDate;
 
 
     @Builder
     public Evaluation(Project project, ManPower manPower, String performance, String communication,
-                      String contents, String type, LocalDateTime end_date) {
+                      String contents, String type, LocalDateTime endDate) {
         this.project = project;
         this.manPower = manPower;
         this.performance = performance;
         this.communication = communication;
         this.contents = contents;
         this.type = type;
-        this.end_date = end_date;
+        this.endDate = endDate;
     }
 }
