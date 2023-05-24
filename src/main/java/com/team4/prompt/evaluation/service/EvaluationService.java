@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.team4.prompt.manpower.domain.Task.PM;
+import static com.team4.prompt.user.model.Role.ADMIN;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +28,9 @@ public class EvaluationService {
     private final ManpowerRepository manpowerRepository;
     private final ProjectRepository projectRepository;
 
+
     //사용자가 이미 평가를 완료한 프로젝트 제외, 종료 상태인 프로젝트 리스트 가져오기
-    public ProjectListDto getProjectsForEvaluation(User user) {
+    public List<ProjectDto> getProjectsForEvaluation(User user) {
         List<ManPower> manpowerList = manpowerRepository.findByUser(user);
         List<ProjectDto> projectDtoList = new ArrayList<>();
 
@@ -44,27 +46,23 @@ public class EvaluationService {
                 }
             }
         }
-        return new ProjectListDto(projectDtoList);
+        return projectDtoList;
     }
 
-    //관리자가 가능한 평가 종류
-    public List<String> getAvailableEvaluationsForAdmin(Long projectId, User user) {
+    //가능한 평가 종류 리스트
+    public List<String> getAvailableEvaluations(Long projectId, User user) {
         List<String> availableEvaluations = new ArrayList<>();
         ManPower manPower = manpowerRepository.findByProjectIdAndUser(projectId, user);
 
-        if (manPower.getTask() == PM) {
-            availableEvaluations.add("PM 평가");
-            availableEvaluations.add("동료 평가");
-            availableEvaluations.add("발주처 평가");
-        } else {
-            availableEvaluations.add("발주처 평가");
-       }
-        return availableEvaluations;
-    }
-
-    public List<String> getAvailableEvaluationsForEmployee(User user) {
-        List<String> availableEvaluations = new ArrayList<>();
-        availableEvaluations.add("동료 평가");
+        if(user.getRole() == ADMIN) {
+            if (manPower.getTask() == PM) {
+                availableEvaluations.add("PM 평가");
+                availableEvaluations.add("동료 평가");
+                availableEvaluations.add("발주처 평가");
+            } else {
+                availableEvaluations.add("발주처 평가");
+            }
+        } else { availableEvaluations.add("동료 평가"); }
 
         return availableEvaluations;
     }
@@ -82,7 +80,7 @@ public class EvaluationService {
         List<String> peerList = new ArrayList<>();
         for (ManPower manPower : peers) {
             if (!manPower.getUser().getId().equals(user.getId())) {  // 현재 사용자는 목록에서 제외
-                String peerInfo = manPower.getUser().getEmployeeNumber() + "+" + manPower.getUser().getName();
+                String peerInfo = manPower.getUser().getEmployeeNumber() + " " + manPower.getUser().getName();
                 peerList.add(peerInfo);
             }
         }
