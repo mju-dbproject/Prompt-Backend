@@ -1,10 +1,11 @@
 package com.team4.prompt.evaluation.service;
 
+import com.team4.prompt.evaluation.controller.dto.EvaluationDto;
+import com.team4.prompt.evaluation.domain.Evaluation;
 import com.team4.prompt.evaluation.repository.EvaluationRepository;
 import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.manpower.repository.ManpowerRepository;
 import com.team4.prompt.project.cotroller.dto.ProjectDto;
-import com.team4.prompt.project.cotroller.dto.ProjectListDto;
 import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.project.repository.ProjectRepository;
@@ -12,10 +13,8 @@ import com.team4.prompt.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static com.team4.prompt.manpower.domain.Task.PM;
 import static com.team4.prompt.user.model.Role.ADMIN;
@@ -68,13 +67,13 @@ public class EvaluationService {
     }
 
     public List<String> getProjectPeer(Long projectId, User user) {
-        Optional<Project> projectOptional = projectRepository.findById(projectId);
-        if (projectOptional.isEmpty()) {
+        Optional<Project> projectOp = projectRepository.findById(projectId);
+        if (projectOp.isEmpty()) {
             // 프로젝트가 존재하지 않는 경우
             return Collections.emptyList();
         }
 
-        Project project = projectOptional.get();
+        Project project = projectOp.get();
         List<ManPower> peers = manpowerRepository.findPeersByProject(project);
 
         List<String> peerList = new ArrayList<>();
@@ -89,37 +88,35 @@ public class EvaluationService {
     }
 
     //선택된 프로젝트 정보 출력
-    public ProjectDto getProjectDetails(Long projectId) {   //전달 값?
+    public ProjectDto getProjectDetails(Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException(""));
 
         return new ProjectDto(project);
     }
 
-    //public void saveEvaluation(User user, EvaluationDto evaluationDto) {
-    //    Project project = projectRepository.findById(evaluationDto.getProjectId())
-    //            .orElseThrow(() -> new IllegalArgumentException(""));
+    public void saveEvaluation(User user, EvaluationDto evaluationDto) {
+        Long projectId = evaluationDto.getProjectId();
+        Long evaluatedId = evaluationDto.getEvaluatedId();
 
-    //    ManPower evaluatedUser = manpowerRepository.findByProjectAndEvaluatedId(project, evaluationDto.getEvaluatedId());
+        Optional<ManPower> manPowerOp = manpowerRepository.findById(evaluatedId);
 
-    //    if (evaluationDto.getType().equals("PM 평가")) {
-    //        Evaluation evaluation = new Evaluation();
-    //        evaluationRepository.save(evaluation);
-    //    } else if (evaluationDto.getType().equals("동료 평가")) {
-    //        List<ManPower> projectPeers = manpowerRepository.findPeersByProject(project);
+        ManPower manPower = manPowerOp.orElseThrow(() -> new NoSuchElementException("" ));
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException(""));
 
-    //        for (ManPower peer : projectPeers) {
-    //            if (!peer.getUser().getName().equals(evaluatedUser)) {
-    //                Evaluation evaluation = new Evaluation(project, peer, evaluationType);
-    //                evaluationRepository.save(evaluation);
-    //            }
-    //        }
-    //    } else if (evaluationDto.getType().equals("고객 평가")) {
-    //        Evaluation evaluation = new Evaluation(project, evaluatedManPower, evaluationType);
-    //        evaluationRepository.save(evaluation);
-    //    } else {
-    //        throw new IllegalArgumentException("");
-    //    }
+        LocalDateTime endDate = project.getEndDate();
+        Evaluation evaluation = Evaluation.builder()
+                .project(project)
+                .manPower(manPower)
+                .performance(evaluationDto.getPerformance())
+                .communication(evaluationDto.getCommunication())
+                .contents(evaluationDto.getContents())
+                .type(evaluationDto.getType())
+                .endDate(endDate)
+                .build();
 
-    //}
+        evaluationRepository.save(evaluation);
+
+    }
 }
