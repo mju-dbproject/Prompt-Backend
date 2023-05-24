@@ -91,12 +91,12 @@ public class EvaluationService {
     }
 
     //선택된 프로젝트 정보 출력
-    //public ProjectDto getProjectDetails(Long projectId) {   //전달 값?
-     //   Project project = projectRepository.findById(projectId)
-     //           .orElseThrow(() -> new IllegalArgumentException(""));
+    public ProjectDto getProjectDetails(Long projectId) {   //전달 값?
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException(""));
 
-    //    return new ProjectDto(project);
-    //}
+        return new ProjectDto(project);
+    }
 
     //public void saveEvaluation(User user, EvaluationDto evaluationDto) {
     //    Project project = projectRepository.findById(evaluationDto.getProjectId())

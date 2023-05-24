@@ -2,6 +2,7 @@ package com.team4.prompt.evaluation.controller;
 
 import com.team4.prompt.common.CurrentUser;
 import com.team4.prompt.evaluation.service.EvaluationService;
+import com.team4.prompt.project.cotroller.dto.ProjectDto;
 import com.team4.prompt.project.cotroller.dto.ProjectListDto;
 import com.team4.prompt.project.service.ProjectService;
 import com.team4.prompt.user.model.User;
@@ -36,16 +37,16 @@ public class EvaluationController {
         return evaluationService.getAvailableEvaluationsForAdmin(projectId, user);
     }
 
-    @GetMapping("/employee/type")
+    @GetMapping("/user/type")
     @PreAuthorize("hasRole('USER')")
     public List<String> getEvaluationsForEmployee(@CurrentUser User user) {
         return evaluationService.getAvailableEvaluationsForEmployee(user);
     }
 
-    //@GetMapping("/project/detail")
-    //public ProjectDto getProjectDetails(@RequestBody Long projectId) {
-    //    return evaluationService.getProjectDetails(projectId);
-    //}
+    @GetMapping("/project/detail")
+    public ProjectDto getProjectDetails(@RequestBody Long projectId) {
+        return evaluationService.getProjectDetails(projectId);
+    }
 
     //@PostMapping("/save")
     //public void saveEvaluation(
