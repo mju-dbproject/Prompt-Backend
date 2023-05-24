@@ -2,6 +2,7 @@ package com.team4.prompt.manpower.repository;
 
 import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.manpower.domain.Task;
+import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.user.model.User;
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +17,8 @@ public interface ManpowerRepository extends JpaRepository<ManPower, Long> {
     Optional<ManPower> findById(Long id);
     @Query("select m from ManPower m join fetch User u where m.user = :user")
     List<ManPower> findByUser(User user);
+
+    ManPower findByProjectIdAndUser(Long projectId, User user);
+
+    List<ManPower> findPeersByProject(Project project);
 }
