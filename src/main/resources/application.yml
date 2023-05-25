@@ -11,7 +11,7 @@ spring:
     properties:
       hibernate:
         show_sql: true
-
+        default_batch_fetch_size: 100
 jwt:
   header: Authorization
   secret: index
