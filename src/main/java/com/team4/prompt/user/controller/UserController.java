@@ -7,6 +7,7 @@ import com.team4.prompt.user.service.UserPasswordService;
 import com.team4.prompt.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,10 +57,10 @@ public class UserController {
         return userService.findUserIdByNameAndEmail(findUserIdRequest.getName(), findUserIdRequest.getEmail());
     }
 
-    //@PostMapping("/approval")
-    //@PreAuthorize("hasRole('ADMIN')")
-    //public void setApproveUser(@CurrentUser User user) {
-    //    userService.approveUser(user);
-    //}
+    @PostMapping("/approval/{userId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public boolean approvedUser(@PathVariable String userId, @CurrentUser User user) {
+        return userService.approveUser(userId);
+    }
 }
 

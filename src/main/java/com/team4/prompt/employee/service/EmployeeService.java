@@ -52,6 +52,8 @@ public class EmployeeService {
             case "employeeNumber" -> employeeList = userRepository.findByEmployeeNumberContaining(keyword);
             case "rank" -> employeeList = userRepository.findByRank(Rank.of(keyword));
             case "position" -> employeeList = userRepository.findByPosition(Position.of(keyword));
+            case "skill" -> employeeList = userRepository.findBySkillContainingIgnoreCase(keyword);
+
             default -> {
                 return new EmployeeListDto(List.of());
             }

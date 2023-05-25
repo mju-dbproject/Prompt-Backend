@@ -5,6 +5,7 @@ import com.team4.prompt.user.controller.dto.UserUpdateDto;
 import com.team4.prompt.user.model.User;
 import com.team4.prompt.user.repository.UserRepository;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -62,16 +63,17 @@ public class UserService {
         return user.getUserId();
     }
 
-    //public void approveUser(@CurrentUser User currentUser) {
-    //    String userId = currentUser.getUserId();
-    //    User user = userRepository.findByUserId(userId)
-    //      .orElseThrow(()-> new IllegalArgumentException(""));
+    public boolean approveUser(String userId) {
+        Optional<User> userOp = userRepository.findByUserId(userId);
+        User user = userOp.orElseThrow(()-> new IllegalArgumentException("사용자가 존재하지"));
 
-    //    if(user.isApproved()) {
-    //        throw new IllegalArgumentException("");
-    //    }
+        if(user.isApproved()) {
+            throw new IllegalArgumentException("이미 승인된");
+        }
 
-    //    user.updateApproved(true);
-    //    userRepository.save(user);
-    //}
+        user.setApproved(true);
+        userRepository.save(user);
+
+        return true;
+    }
 }
