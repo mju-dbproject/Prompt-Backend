@@ -142,4 +142,8 @@ public class User {
         this.skill = skill;
 
     }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
 }
