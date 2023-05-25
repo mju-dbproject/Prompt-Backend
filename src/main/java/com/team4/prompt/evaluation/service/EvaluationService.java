@@ -106,6 +106,8 @@ public class EvaluationService {
                 .orElseThrow(() -> new IllegalArgumentException(""));
 
         LocalDateTime endDate = project.getEndDate();
+        evaluationDto.setEndDate(endDate);
+
         Evaluation evaluation = Evaluation.builder()
                 .project(project)
                 .manPower(manPower)
@@ -113,10 +115,53 @@ public class EvaluationService {
                 .communication(evaluationDto.getCommunication())
                 .contents(evaluationDto.getContents())
                 .type(evaluationDto.getType())
-                .endDate(endDate)
+                .endDate(evaluationDto.getEndDate())
                 .build();
 
         evaluationRepository.save(evaluation);
+
+    }
+
+    //프로젝트별 평가 조회
+    public List<EvaluationDto> getEvaluationsByProjectId(Long projectId) {
+        List<Evaluation> evaluations = evaluationRepository.findByProjectId(projectId);
+        List<EvaluationDto> evaluationDtos = new ArrayList<>();
+
+        for (Evaluation evaluation : evaluations) {
+            EvaluationDto evaluationDto = new EvaluationDto(
+                    evaluation.getProject().getId(),
+                    evaluation.getManPower().getId(),
+                    evaluation.getPerformance(),
+                    evaluation.getCommunication(),
+                    evaluation.getContents(),
+                    evaluation.getType()
+            );
+            evaluationDto.setEndDate(evaluation.getProject().getEndDate());
+            evaluationDtos.add(evaluationDto);
+        }
+
+        return evaluationDtos;
+    }
+
+
+    //직원별 평가 조회
+    public List<EvaluationDto> getEvaluationsByEvaluatedId(Long evaluatedId) {
+        List<Evaluation> evaluations = evaluationRepository.findByEvaluatedId(evaluatedId);
+        List<EvaluationDto> evaluationDtos = new ArrayList<>();
+
+            for (Evaluation evaluation : evaluations) {
+                EvaluationDto evaluationDto = new EvaluationDto(
+                        evaluation.getProject().getId(),
+                        evaluation.getManPower().getId(),
+                        evaluation.getPerformance(),
+                        evaluation.getCommunication(),
+                        evaluation.getContents(),
+                        evaluation.getType()
+                );
+                evaluationDto.setEndDate(evaluation.getProject().getEndDate());
+                evaluationDtos.add(evaluationDto);
+            }
+            return evaluationDtos;
 
     }
 }

@@ -1,5 +1,6 @@
 package com.team4.prompt.project.domain;
 
+import com.team4.prompt.evaluation.domain.Evaluation;
 import com.team4.prompt.manpower.domain.ManPower;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -40,6 +41,9 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ManPower> manPowerList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Evaluation> evaluationList = new ArrayList<>();
 
     @Column(nullable = false)
     private String client;
