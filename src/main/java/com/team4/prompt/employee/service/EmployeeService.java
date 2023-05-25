@@ -51,7 +51,7 @@ public class EmployeeService {
             case "name" -> employeeList = userRepository.findByNameContaining(keyword);
             case "employeeNumber" -> employeeList = userRepository.findByEmployeeNumberContaining(keyword);
             case "rank" -> employeeList = userRepository.findByRankContaining(Rank.of(keyword));
-            case "position" -> employeeList = userRepository.findByPositionContaining(Position.of(keyword));
+            case "position" -> employeeList = userRepository.findByPosition(Position.of(keyword));
             case "skill" -> employeeList = userRepository.findBySkillContainingIgnoreCase(keyword);
 
             default -> {
