@@ -22,31 +22,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/project")
+@RequestMapping("api")
 @RequiredArgsConstructor
 public class ProjectController {
 
     private final ProjectService projectService;
 
-    @PostMapping("/admin")
+    @PostMapping("/admin/project")
     @PreAuthorize("hasRole('ADMIN')")
     public void createProject(@RequestBody @Valid ProjectCreateRequest projectCreateRequest) {
         projectService.createProject(projectCreateRequest);
     }
 
-    @PostMapping("/admin/{id}")
+    @PostMapping("/admin/project/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public void updateProject(@PathVariable Long id, @RequestBody @Valid ProjectUpdateRequest projectUpdateRequest) {
         projectService.updateProject(id, projectUpdateRequest);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/project/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ProjectDetailsDto getProjectDetails(@PathVariable Long id) {
         return projectService.getProjectDetails(id);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/project/search")
     @PreAuthorize("hasRole('ADMIN')")
     public ProjectListDto search(
             @RequestParam(required = false) Integer status,

@@ -81,14 +81,11 @@ public class ProjectService {
         });
 
         projectRepository.save(project);
-
     }
-
 
     public ProjectDetailsDto getProjectDetails(Long id) {
         Project project = findProjectById(id);
         return ProjectDetailsDto.from(project);
-
     }
 
     public ProjectListDto getAllProjectForEmployee(User user) {

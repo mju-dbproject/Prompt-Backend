@@ -38,7 +38,7 @@ public class Project {
 
     private LocalDateTime endDate;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ManPower> manPowerList = new ArrayList<>();
 
     @Column(nullable = false)
@@ -79,10 +79,11 @@ public class Project {
     }
 
     public void addManpower(ManPower manPower) {
-        this.manPowerList.add(manPower);
+        manPowerList.add(manPower);
     }
+
     public void deleteManpower(ManPower manPower) {
-        this.manPowerList.remove(manPower);
+        manPowerList.remove(manPower);
     }
 
     public void giveProjectNumber(int createOrder){
