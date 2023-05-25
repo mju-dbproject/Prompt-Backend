@@ -3,8 +3,8 @@ package com.team4.prompt.project.service;
 import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.manpower.domain.Task;
 import com.team4.prompt.manpower.repository.ManpowerRepository;
-import com.team4.prompt.manpower.service.ManpowerService;
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
+import com.team4.prompt.project.cotroller.dto.ProjectDetailsDto;
 import com.team4.prompt.project.cotroller.dto.ProjectDto;
 import com.team4.prompt.project.cotroller.dto.ProjectListDto;
 import com.team4.prompt.project.domain.Project;
@@ -55,22 +55,10 @@ public class ProjectService {
         projectRepository.save(newProject);
     }
 
-    public ProjectListDto getAllProject(){
-        List<Project> projectList = projectRepository.findAll();
-        List<ProjectDto> projectDtoList = projectList.stream().map(ProjectDto::new).toList();
-        return new ProjectListDto(projectDtoList);
-    }
+    public ProjectDetailsDto getProjectDetails(Long id) {
+        Project project = findProjectById(id);
+        return ProjectDetailsDto.from(project);
 
-    public ProjectListDto getInProgressProject(){
-        List<Project> projectList = projectRepository.findByStatus(ProjectStatus.PROGRESS);
-        List<ProjectDto> projectDtoList = projectList.stream().map(ProjectDto::new).toList();
-        return new ProjectListDto(projectDtoList);
-    }
-
-    public ProjectListDto getDoneProject() {
-        List<Project> projectList = projectRepository.findByStatus(ProjectStatus.FINISH);
-        List<ProjectDto> projectDtoList = projectList.stream().map(ProjectDto::new).toList();
-        return new ProjectListDto(projectDtoList);
     }
 
     public ProjectListDto getAllProjectForEmployee(User user) {
@@ -98,5 +86,10 @@ public class ProjectService {
     public ProjectListDto search(Integer status, String projectNumber, String client, String name, LocalDateTime startDate, LocalDateTime endDate) {
         return new ProjectListDto(projectRepository.findBySearchOption(status, projectNumber, client, name, startDate, endDate)
                 .stream().map(ProjectDto::new).toList());
+    }
+
+    public Project findProjectById(Long id) {
+        return projectRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(""));
     }
 }

@@ -2,8 +2,8 @@ package com.team4.prompt.project.cotroller;
 
 import com.team4.prompt.common.CurrentUser;
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
+import com.team4.prompt.project.cotroller.dto.ProjectDetailsDto;
 import com.team4.prompt.project.cotroller.dto.ProjectListDto;
-import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.project.service.ProjectService;
 import com.team4.prompt.user.model.User;
 import jakarta.validation.Valid;
@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,22 +33,10 @@ public class ProjectController {
         projectService.createProject(projectCreateRequest);
     }
 
-    @GetMapping("/admin/all")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ProjectListDto getAllProject(){
-        return projectService.getAllProject();
-    }
-
-    @GetMapping("admin/in-progress")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ProjectListDto getInProgressProject() {
-        return projectService.getInProgressProject();
-    }
-
-    @GetMapping("admin/done")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ProjectListDto getDoneProject() {
-        return projectService.getDoneProject();
+    public ProjectDetailsDto getProjectDetails(@PathVariable Long id) {
+        return projectService.getProjectDetails(id);
     }
 
     @GetMapping("/search")
@@ -61,7 +51,7 @@ public class ProjectController {
         return projectService.search(status, projectNumber, client, name, startDate, endDate);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public ProjectListDto getAllProjectFromEmployee(@CurrentUser User user) {
         return projectService.getAllProjectForEmployee(user);
     }

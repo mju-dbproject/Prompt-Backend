@@ -10,18 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ProjectRepository extends JpaRepository<Project, Long>, ProjectRepositoryCustom {
 
+    Optional<Project> findById(Long id);
     List<Project> findByStatus(ProjectStatus projectStatus);
-
-    List<Project> findByStartDateBetween(LocalDateTime startDate, LocalDateTime endDate);
-    List<Project> findByStartDateBetweenAndClientContaining(LocalDateTime startDate, LocalDateTime endDate, String client);
-    List<Project> findByStartDateBetweenAndProjectNumberContaining(LocalDateTime startDate, LocalDateTime endDate, String projectNumber);
-    List<Project> findByStartDateBetweenAndNameContaining(LocalDateTime startDate, LocalDateTime endDate, String projectName);
-    List<Project> findByClientContaining(String client);
-    List<Project> findByProjectNumberContaining(String projectNumber);
-    List<Project> findByNameContaining(String projectName);
-
-
-
     @Query("select count(*) from Project where YEAR(createDate) = YEAR(:now) AND MONTH(createDate) = MONTH(:now)")
     int findCreateCountInMonth(LocalDateTime now);
 }

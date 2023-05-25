@@ -16,5 +16,5 @@ public class ProjectCreateRequest {
 
     private String description;
 
-    private List<ProjectEmployee> employeeList;
+    private List<ProjectEmployeeRequest> employeeList;
 }
