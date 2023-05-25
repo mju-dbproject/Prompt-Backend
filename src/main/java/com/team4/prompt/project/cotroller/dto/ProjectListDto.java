@@ -10,6 +10,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProjectListDto {
     List<ProjectDto> projectList;
-
-
 }

@@ -4,6 +4,7 @@ import com.team4.prompt.common.CurrentUser;
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
 import com.team4.prompt.project.cotroller.dto.ProjectDetailsDto;
 import com.team4.prompt.project.cotroller.dto.ProjectListDto;
+import com.team4.prompt.project.cotroller.dto.ProjectUpdateRequest;
 import com.team4.prompt.project.service.ProjectService;
 import com.team4.prompt.user.model.User;
 import jakarta.validation.Valid;
@@ -31,6 +32,12 @@ public class ProjectController {
     @PreAuthorize("hasRole('ADMIN')")
     public void createProject(@RequestBody @Valid ProjectCreateRequest projectCreateRequest) {
         projectService.createProject(projectCreateRequest);
+    }
+
+    @PostMapping("/admin/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void updateProject(@PathVariable Long id, @RequestBody @Valid ProjectUpdateRequest projectUpdateRequest) {
+        projectService.updateProject(id, projectUpdateRequest);
     }
 
     @GetMapping("/{id}")

@@ -71,8 +71,18 @@ public class Project {
         this.deleted = deleted;
     }
 
+    public void update(String name, String client, int budget, String description){
+        this.name = name;
+        this.client = client;
+        this.budget = budget;
+        this.description = description;
+    }
+
     public void addManpower(ManPower manPower) {
         this.manPowerList.add(manPower);
+    }
+    public void deleteManpower(ManPower manPower) {
+        this.manPowerList.remove(manPower);
     }
 
     public void giveProjectNumber(int createOrder){
