@@ -1,20 +1,14 @@
 package com.team4.prompt.project.cotroller.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class ProjectCreateRequest {
-    @NotBlank
+public class ProjectUpdateRequest {
     private String name;
-
-    @NotBlank
     private String client;
-
     private int budget;
-
     private String description;
-
-    private List<ProjectEmployeeRequest> employeeList;
+    private List<ProjectEmployeeRequest> addEmployeeList;
+    private List<Long> endManpowerList;
 }

@@ -9,7 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectListDto {
-    List<ProjectDto> projects;
-
-
+    List<ProjectDto> projectList;
 }

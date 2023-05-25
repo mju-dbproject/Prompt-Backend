@@ -18,6 +18,9 @@ public interface ManpowerRepository extends JpaRepository<ManPower, Long> {
     @Query("select m from ManPower m join fetch User u where m.user = :user")
     List<ManPower> findByUser(User user);
 
+    @Query("select m from ManPower m join fetch User u where m.id = :id")
+    List<ManPower> findWithUserById(Long id);
+  
     List<ManPower> findPeersByProject(Project project);
 
     ManPower findByProjectIdAndUser(Long projectId, User user);

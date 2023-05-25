@@ -39,7 +39,7 @@ public class Project {
 
     private LocalDateTime endDate;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ManPower> manPowerList = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
@@ -75,8 +75,19 @@ public class Project {
         this.deleted = deleted;
     }
 
+    public void update(String name, String client, int budget, String description){
+        this.name = name;
+        this.client = client;
+        this.budget = budget;
+        this.description = description;
+    }
+
     public void addManpower(ManPower manPower) {
-        this.manPowerList.add(manPower);
+        manPowerList.add(manPower);
+    }
+
+    public void deleteManpower(ManPower manPower) {
+        manPowerList.remove(manPower);
     }
 
     public void giveProjectNumber(int createOrder){
