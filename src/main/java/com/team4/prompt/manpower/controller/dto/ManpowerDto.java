@@ -15,9 +15,9 @@ public class ManpowerDto {
     private String employeeNumber;
     private String name;
     private String skill;
-    private Rank rank;
-    private Position position;
-    private Task task;
+    private String  rank;
+    private String position;
+    private String task;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     public ManpowerDto(User user){
@@ -25,7 +25,7 @@ public class ManpowerDto {
         this.employeeNumber = user.getEmployeeNumber();
         this.name = user.getName();
         this.skill = user.getSkill();
-        this.rank = user.getRank();
-        this.position = user.getPosition();
+        this.rank = user.getRank().getRankName();
+        this.position = user.getPosition().getPositionName();
     }
 }

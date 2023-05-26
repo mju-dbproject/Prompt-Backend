@@ -14,9 +14,9 @@ public class EmployeeDto {
     private String employeeNumber;
     private String name;
     private String skill;
-    private Rank rank;
-    private Position position;
-    private Role role;
+    private String  rank;
+    private String  position;
+    private String role;
     private Boolean approved;
 
     public EmployeeDto(User user){
@@ -24,9 +24,9 @@ public class EmployeeDto {
         this.employeeNumber = user.getEmployeeNumber();
         this.name = user.getName();
         this.skill = user.getSkill();
-        this.rank = user.getRank();
-        this.position = user.getPosition();
-        this.role = user.getRole();
+        this.rank = user.getRank().getRankName();
+        this.position = user.getPosition().getPositionName();
+        this.role = user.getRole().getRoleName();
         this.approved = user.isApproved();
     }
 }
