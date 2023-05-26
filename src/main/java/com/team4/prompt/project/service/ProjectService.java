@@ -110,7 +110,7 @@ public class ProjectService {
         return new ProjectListDto(projectDtoList);
     }
 
-    public ProjectListDto search(Integer status, String projectNumber, String client, String name, LocalDateTime startDate, LocalDateTime endDate) {
+    public ProjectListDto search(Integer status, String projectNumber, String client, String name, String startDate, String endDate) {
         return new ProjectListDto(projectRepository.findBySearchOption(status, projectNumber, client, name, startDate, endDate)
                 .stream().map(ProjectDto::new).toList());
     }

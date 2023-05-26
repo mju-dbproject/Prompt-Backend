@@ -7,8 +7,10 @@ import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.project.domain.QProject;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RequiredArgsConstructor
 public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
@@ -19,8 +21,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                                             String projectNumber,
                                             String client,
                                             String projectName,
-                                            LocalDateTime startDate,
-                                            LocalDateTime endDate) {
+                                            String startDate,
+                                            String endDate) {
         JPAQuery<Project> query = jpaQueryFactory.selectFrom(QProject.project)
                 .where(eqProjectStatus(projectStatus))
                 .where(containProjectName(projectName), containProjectNumber(projectNumber), containClient(client))
@@ -36,14 +38,17 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         return QProject.project.status.eq(ProjectStatus.of(status));
     }
 
-    private BooleanExpression betweenDate(LocalDateTime startDate, LocalDateTime endDate) {
+    private BooleanExpression betweenDate(String startDate, String endDate) {
         if(endDate == null) {
-            endDate = LocalDateTime.now();
+            endDate = LocalDateTime.now().toLocalDate().toString();
         }
         if(startDate == null) {
-            startDate = LocalDateTime.MIN;
+            startDate = LocalDateTime.MIN.toLocalDate().toString();
         }
-        return QProject.project.createDate.between(startDate, endDate);
+        
+        LocalDateTime sDate = LocalDateTime.parse(startDate + " 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime eDate = LocalDateTime.parse(endDate + " 23:59:59", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return QProject.project.createDate.between(sDate, eDate);
     }
 
     private BooleanExpression containProjectName(String projectName) {

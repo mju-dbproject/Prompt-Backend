@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ProjectRepositoryCustom {
-    List<Project> findBySearchOption(Integer status, String projectNumber, String client, String projectName, LocalDateTime startDate, LocalDateTime endDate);
+    List<Project> findBySearchOption(Integer status, String projectNumber, String client, String projectName, String startDate, String endDate);
 }
