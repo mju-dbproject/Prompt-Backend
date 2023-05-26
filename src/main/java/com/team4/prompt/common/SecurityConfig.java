@@ -26,6 +26,7 @@ public class SecurityConfig {
     private static final String API_PREFIX = "/api";
     private final UserService userService;
     private final JwtProvider jwtProvider;
+    private final CorsConfig corsConfig;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -47,6 +48,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .rememberMe().disable()
                 .logout().disable()
+                .addFilter(corsConfig.corsFilter())
                 .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
