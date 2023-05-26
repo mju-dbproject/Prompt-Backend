@@ -45,7 +45,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         if(startDate == null) {
             startDate = LocalDateTime.MIN.toLocalDate().toString();
         }
-        
+
         LocalDateTime sDate = LocalDateTime.parse(startDate + " 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime eDate = LocalDateTime.parse(endDate + " 23:59:59", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         return QProject.project.createDate.between(sDate, eDate);
