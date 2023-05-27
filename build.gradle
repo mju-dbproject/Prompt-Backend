@@ -42,6 +42,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+jar {
+	enabled = false
+}
+
 clean {
 	delete file(querydslSrcDir)
 }
