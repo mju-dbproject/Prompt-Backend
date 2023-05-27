@@ -4,7 +4,7 @@ CREATE TABLE employee
     id int NOT NULL AUTO_INCREMENT ,
     user_id varchar(20) NOT NULL ,
     password varchar(80) NOT NULL ,
-    employee_no varchar(10) NOT NULL ,
+    employee_number varchar(10) NOT NULL ,
     name varchar(10) NOT NULL ,
     email varchar(50) NOT NULL ,
     registration_number varchar(20) NOT NULL ,
@@ -20,7 +20,7 @@ CREATE TABLE employee
     deleted boolean NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
     CONSTRAINT unq_user_id UNIQUE (user_id),
-    CONSTRAINT unq_employee_no UNIQUE (employee_no),
+    CONSTRAINT unq_employee_no UNIQUE (employee_number),
     CONSTRAINT unq_registration_number UNIQUE (registration_number),
     CONSTRAINT unq_email UNIQUE (email)
 );
@@ -28,21 +28,21 @@ CREATE TABLE employee
 CREATE TABLE project
 (
     id int NOT NULL AUTO_INCREMENT ,
-    project_no varchar(10) NOT NULL ,
+    project_number varchar(10) NOT NULL ,
     name varchar(30) NOT NULL ,
     create_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP() ,
     start_date datetime DEFAULT NULL ,
     end_date datetime DEFAULT NULL ,
     client varchar(30) NOT NULL ,
     budget int NOT NULL DEFAULT 0,
-    state int NOT NULL DEFAULT 0,
+    state varchar(30) NOT NULL DEFAULT 0,
     description varchar(50) DEFAULT NULL,
     deleted boolean NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
-    CONSTRAINT unq_project_no UNIQUE (project_no)
+    CONSTRAINT unq_project_number UNIQUE (project_number)
 );
 
-CREATE TABLE manpower
+CREATE TABLE man_power
 (
     id int NOT NULL AUTO_INCREMENT ,
     employee_id int NOT NULL ,
@@ -67,6 +67,6 @@ CREATE TABLE evaluation
     type varchar(20) NOT NULL ,
     end_date datetime NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT fk_evaluation_to_manpower FOREIGN KEY (evaluated_id) REFERENCES manpower (id) ON DELETE RESTRICT ON UPDATE RESTRICT ,
+    CONSTRAINT fk_evaluation_to_manpower FOREIGN KEY (evaluated_id) REFERENCES man_power (id) ON DELETE RESTRICT ON UPDATE RESTRICT ,
     CONSTRAINT fk_evaluation_to_project FOREIGN KEY (project_id) REFERENCES project (id) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
