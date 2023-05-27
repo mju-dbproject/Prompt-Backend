@@ -27,7 +27,7 @@ public class JwtProvider {
         return JWT.create()
                 .withSubject(principalDetails.getUsername())
                 .withIssuedAt(now)
-                .withExpiresAt(new Date(now.getTime() + expirySeconds))
+                .withExpiresAt(new Date(now.getTime() + expirySeconds * 1000L))
                 .withClaim("id", principalDetails.getUser().getId())
                 .withClaim("userId", principalDetails.getUsername())
                 .sign(Algorithm.HMAC512(secret));

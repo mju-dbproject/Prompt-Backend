@@ -20,5 +20,5 @@ else
 fi
 
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
-echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
+echo "> DEPLOY_JAR 배포 $DEPLOY_JAR"    >> /home/ec2-user/action/deploy.log
 nohup java -jar -Dspring.profiles.active=prod "$DEPLOY_JAR" >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
