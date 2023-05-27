@@ -16,3 +16,6 @@ jwt:
   header: Authorization
   secret: index
   expirySeconds: 86400
+
+server:
+  port: 8080
