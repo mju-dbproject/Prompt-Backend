@@ -27,9 +27,11 @@ public class UserController {
     }
 
     //아이디 중복체크
-    @GetMapping("/check-id")
-    public boolean checkId(@RequestBody String userId) {
-        return userService.checkId(userId);  //true: 중복없음
+    @PostMapping("/check-id")
+    public CheckIdResponse checkId(@RequestBody String userId) {
+
+        boolean isNotDuplicated = userService.checkId(userId);
+        return new CheckIdResponse(isNotDuplicated);
     }
 
     @PutMapping("/password")
