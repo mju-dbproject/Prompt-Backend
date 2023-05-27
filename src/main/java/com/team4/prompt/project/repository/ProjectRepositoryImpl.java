@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.project.domain.QProject;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -43,9 +44,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
             endDate = LocalDateTime.now().toLocalDate().toString();
         }
         if(startDate == null) {
-            startDate = LocalDateTime.MIN.toLocalDate().toString();
+            startDate = LocalDate.of(2010, 1, 1).toString();
         }
-
         LocalDateTime sDate = LocalDateTime.parse(startDate + " 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime eDate = LocalDateTime.parse(endDate + " 23:59:59", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         return QProject.project.createDate.between(sDate, eDate);

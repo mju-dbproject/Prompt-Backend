@@ -38,12 +38,11 @@ public class ProjectController {
     }
 
     @GetMapping("/project/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ProjectDetailsDto getProjectDetails(@PathVariable Long id) {
         return projectService.getProjectDetails(id);
     }
 
-    @GetMapping("/project/search")
+    @GetMapping("/admin/project/search")
     @PreAuthorize("hasRole('ADMIN')")
     public ProjectListDto search(
             @RequestParam(required = false) Integer status,
