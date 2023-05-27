@@ -55,19 +55,9 @@ public class ProjectController {
         return projectService.search(status, projectNumber, client, name, startDate, endDate);
     }
 
-    @GetMapping()
-    public ProjectListDto getAllProjectFromEmployee(@CurrentUser User user) {
-        return projectService.getAllProjectForEmployee(user);
-    }
-
-    @GetMapping("/in-progress")
-    public ProjectListDto getInProgressProjectFromEmployee(@CurrentUser User user) {
-        return projectService.getInProgressProjectForEmployee(user);
-    }
-
-    @GetMapping("/done")
-    public ProjectListDto getDoneProjectFromEmployee(@CurrentUser User user) {
-        return projectService.getDoneProjectForEmployee(user);
+    @GetMapping("/project")
+    public ProjectListDto getAllProjectFromEmployee(@CurrentUser User user, @RequestParam(required = false) Integer status) {
+        return projectService.getAllProjectForEmployee(user, status);
     }
 
 }
