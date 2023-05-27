@@ -28,6 +28,14 @@ jobs:
           mysql user: 'dbteam'
           mysql password: '1234'
 
+      - name: make application-prod.yml
+        run: |
+          cd ./src/main/resources
+
+          touch ./application-prod.yml
+
+          echo "${{ secrets.PROD_YML }}" >> ./application-prod.yml
+        shell: bash
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
@@ -35,15 +43,6 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
-        shell: bash
-
-      - name: make application-prod.yml
-        run: |
-          cd ./src/main/resources
-          
-          touch ./application-prod.yml
-          
-          echo "${{ secrets.PROD_YML }}" >> ./application-prod.yml
         shell: bash
 
       - name: Make zip file
