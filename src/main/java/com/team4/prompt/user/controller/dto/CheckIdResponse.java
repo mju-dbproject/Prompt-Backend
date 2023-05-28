@@ -4,9 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class CheckIdResponse {
-    private boolean isNotDuplicated;
+    private final boolean isNotDuplicated;
 
     public CheckIdResponse(boolean isNotDuplicated) {
         this.isNotDuplicated = isNotDuplicated;
     }
+
 }
