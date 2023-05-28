@@ -18,13 +18,10 @@ public class UserPasswordService {
         String userId = currentUser.getUserId();
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(()-> new IllegalArgumentException(""));
-
         if (!passwordEncoder.matches(changePasswordRequest.getCheckPassword(), user.getPassword())) {
             throw new IllegalArgumentException("");
         }
-
-        String newPassword = passwordEncoder.encode(changePasswordRequest.getNewPassword());
-        user.updatePassword(passwordEncoder, newPassword);
+        user.updatePassword(passwordEncoder, changePasswordRequest.getNewPassword());
         userRepository.save(user);
 
     }
