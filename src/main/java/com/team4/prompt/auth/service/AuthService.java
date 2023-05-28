@@ -20,8 +20,9 @@ public class AuthService {
         UsernamePasswordAuthenticationToken authToken
                 = new UsernamePasswordAuthenticationToken(loginRequest.getUserId(), loginRequest.getPassword(), null);
         Authentication authentication = authenticationManager.authenticate(authToken);
-        String token = jwtProvider.createToken((PrincipalDetails) authentication.getPrincipal());
-        System.out.println(token);
-        return new LoginResponse(TOKEN_TYPE, token);
+        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+        String token = jwtProvider.createToken(principal);
+        String role = principal.getAuthorities().stream().findFirst().orElseThrow(() -> new IllegalArgumentException("")).getAuthority();
+        return new LoginResponse(TOKEN_TYPE, token, role);
     }
 }

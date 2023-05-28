@@ -1,6 +1,7 @@
 package com.team4.prompt.project.cotroller.dto;
 
 import com.team4.prompt.project.domain.Project;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -25,11 +26,11 @@ public class ProjectDetailsDto {
 
     private String description;
 
-    private LocalDateTime createDate;
+    private LocalDate createDate;
 
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     private List<ManpowerResponse> manpowerList;
 
@@ -37,7 +38,9 @@ public class ProjectDetailsDto {
         return new ProjectDetailsDto(project.getId(), project.getProjectNumber(),
                 project.getName(), project.getClient(), project.getBudget(),
                 project.getStatus().getStatusName(), project.getDescription(),
-                project.getCreateDate(), project.getStartDate(), project.getEndDate(),
+                project.getCreateDate()!=null ?  project.getCreateDate().toLocalDate() : null,
+                project.getStartDate() != null ? project.getStartDate().toLocalDate() : null,
+                project.getEndDate() != null ? project.getEndDate().toLocalDate() : null,
                 project.getManPowerList().stream().map(ManpowerResponse::from).toList());
     }
 }

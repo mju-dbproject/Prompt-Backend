@@ -1,9 +1,13 @@
 #!/bin/bash
 BUILD_JAR=$(ls /home/ec2-user/action/build/libs/*.jar)
 JAR_NAME=$(basename "$BUILD_JAR")
-echo "> build 파일명: $JAR_NAME" >> /home/ec2-user/action/deploy.log
 
-echo "> build 파일 복사" >> /home/ec2-user/action/deploy.log
+{
+  echo "===== 배포 시작 : $(date +%c) ====="
+  echo "> build 파일명: $JAR_NAME"
+  echo "> build 파일 복사"
+} >> /home/ec2-user/action/deploy.log
+
 DEPLOY_PATH=/home/ec2-user/action/
 cp "$BUILD_JAR" $DEPLOY_PATH
 
