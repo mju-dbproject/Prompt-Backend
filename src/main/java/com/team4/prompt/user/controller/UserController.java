@@ -28,9 +28,9 @@ public class UserController {
 
     //아이디 중복체크
     @PostMapping("/check-id")
-    public CheckIdResponse checkId(@RequestBody String userId) {
+    public CheckIdResponse checkId(@RequestBody CheckIdRequest checkIdRequest) {
 
-        boolean isNotDuplicated = userService.checkId(userId);
+        boolean isNotDuplicated = userService.checkId(checkIdRequest.getUserId());
         return new CheckIdResponse(isNotDuplicated);
     }
 
