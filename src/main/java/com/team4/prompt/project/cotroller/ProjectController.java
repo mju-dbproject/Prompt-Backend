@@ -45,7 +45,7 @@ public class ProjectController {
     @GetMapping("/admin/project/search")
     @PreAuthorize("hasRole('ADMIN')")
     public ProjectListDto search(
-            @RequestParam(required = false) Integer status,
+            @RequestParam(required = true) Integer status,
             @RequestParam(required = false) String projectNumber,
             @RequestParam(required = false) String client,
             @RequestParam(required = false) String name,
