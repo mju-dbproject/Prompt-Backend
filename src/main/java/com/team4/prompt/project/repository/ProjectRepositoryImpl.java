@@ -33,7 +33,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     }
 
     private BooleanExpression eqProjectStatus(Integer status) {
-        if(status == 0) {
+        if(status == 0 && status == null) {
             return null;
         }
         return QProject.project.status.eq(ProjectStatus.of(status));

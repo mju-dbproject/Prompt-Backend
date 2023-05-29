@@ -1,6 +1,7 @@
 package com.team4.prompt.project.cotroller;
 
 import com.team4.prompt.common.CurrentUser;
+import com.team4.prompt.project.cotroller.dto.ProjectCountDto;
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
 import com.team4.prompt.project.cotroller.dto.ProjectDetailsDto;
 import com.team4.prompt.project.cotroller.dto.ProjectListDto;
@@ -45,13 +46,18 @@ public class ProjectController {
     @GetMapping("/admin/project/search")
     @PreAuthorize("hasRole('ADMIN')")
     public ProjectListDto search(
-            @RequestParam(required = true) Integer status,
+            @RequestParam Integer status,
             @RequestParam(required = false) String projectNumber,
             @RequestParam(required = false) String client,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate) {
         return projectService.search(status, projectNumber, client, name, startDate, endDate);
+    }
+
+    @GetMapping("/admin/project/count")
+    public ProjectCountDto getProjectCount() {
+        return projectService.getProjectCount();
     }
 
     @GetMapping("/project")

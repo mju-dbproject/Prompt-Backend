@@ -4,6 +4,7 @@ import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.manpower.domain.Task;
 import com.team4.prompt.manpower.repository.ManpowerRepository;
 import com.team4.prompt.manpower.service.ManpowerService;
+import com.team4.prompt.project.cotroller.dto.ProjectCountDto;
 import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
 import com.team4.prompt.project.cotroller.dto.ProjectDetailsDto;
 import com.team4.prompt.project.cotroller.dto.ProjectDto;
@@ -86,6 +87,15 @@ public class ProjectService {
     public ProjectDetailsDto getProjectDetails(Long id) {
         Project project = findProjectById(id);
         return ProjectDetailsDto.from(project);
+    }
+
+    public ProjectCountDto getProjectCount() {
+        int ready = projectRepository.findByStatus(ProjectStatus.READY).size();
+        int progress = projectRepository.findByStatus(ProjectStatus.PROGRESS).size();
+        int finish = projectRepository.findByStatus(ProjectStatus.FINISH).size();
+        int cancel = projectRepository.findByStatus(ProjectStatus.CANCEL).size();
+
+        return new ProjectCountDto(ready+progress+finish+cancel, ready, progress, finish, cancel);
     }
 
     public ProjectListDto getAllProjectForEmployee(User user, Integer status) {
