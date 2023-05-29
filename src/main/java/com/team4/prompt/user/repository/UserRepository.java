@@ -21,6 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRank(Rank rank);
     List<User> findByPosition(Position position);
     List<User> findBySkillContainingIgnoreCase(String skill);
+    List<User> findByRole(Role role);
     List<User> findByRoleNot(Role role);
     List<User> findByRoleNotAndNameContaining(Role role, String name);
     List<User> findByRoleNotAndEmployeeNumberContaining(Role role, String employeeNumber);

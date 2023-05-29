@@ -6,6 +6,8 @@ import com.team4.prompt.user.model.User;
 import com.team4.prompt.user.service.UserPasswordService;
 import com.team4.prompt.user.service.UserService;
 import jakarta.validation.Valid;
+import java.util.Map;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,8 +63,22 @@ public class UserController {
 
     @PostMapping("/approval")
     @PreAuthorize("hasRole('ADMIN')")
-    public void approvedUser(@RequestBody ApproveUserRequest approveUserRequest) {
-        userService.approveUser(approveUserRequest);
+    public void approvedUser(@RequestBody Map<String, Long> approveUserRequest) {
+        Long approveId = approveUserRequest.get("approveId");
+        userService.approveUser(approveId);
+    }
+
+    @DeleteMapping("/approval")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void rejectUser(@RequestBody Map<String, Long> rejectUserRequest) {
+        Long rejectId = rejectUserRequest.get("rejectId");
+        userService.rejectUser(rejectId);
+    }
+
+    @GetMapping("/approval")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ApproveListResponse getApprovalList(){
+        return userService.getApprovalList();
     }
 
 
