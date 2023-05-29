@@ -2,6 +2,7 @@ package com.team4.prompt.user.service;
 
 import com.team4.prompt.user.controller.dto.UserInfoDto;
 import com.team4.prompt.user.controller.dto.UserUpdateDto;
+import com.team4.prompt.user.model.Role;
 import com.team4.prompt.user.model.User;
 import com.team4.prompt.user.repository.UserRepository;
 import java.time.LocalDateTime;
@@ -72,6 +73,7 @@ public class UserService {
         }
 
         user.setApproved(true);
+        user.approveEmployee(Role.USER);
         userRepository.save(user);
 
         return true;

@@ -124,6 +124,10 @@ public class User {
         this.role = role;
     }
 
+    public void approveEmployee(Role role) {
+        this.role = role;
+    }
+
     public void updatePassword(PasswordEncoder passwordEncoder, String password) {
         this.password = passwordEncoder.encode(password);
     }

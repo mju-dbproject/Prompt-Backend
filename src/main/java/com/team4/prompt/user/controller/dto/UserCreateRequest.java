@@ -50,7 +50,7 @@ public class UserCreateRequest {
                 .skill(skill)
                 .position(Position.of(position))
                 .rank(Rank.of(rank))
-                .role(Role.USER)
+                .role(Role.WAITING)
                 .build();
     }
 
