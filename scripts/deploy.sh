@@ -18,11 +18,14 @@ if [ -z "$CURRENT_PID" ]
 then
   echo "> 현재 구동중인 애플리케이션이 없으므로 종료하지 않습니다." >> /home/ec2-user/action/deploy.log
 else
-  echo "> kill -15 $CURRENT_PID"
-  kill -15 "$CURRENT_PID"
-  sleep 5
+  echo "> kill -9 $CURRENT_PID"
+  kill -9 "$CURRENT_PID"
 fi
 
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
-echo "> DEPLOY_JAR 배포 $DEPLOY_JAR"    >> /home/ec2-user/action/deploy.log
+echo "> DEPLOY_JAR 배포 $DEPLOY_JAR" >> /home/ec2-user/action/deploy.log
 nohup java -jar -Dspring.profiles.active=prod "$DEPLOY_JAR" >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
+
+sleep 3
+
+echo "> 배포 종료 : $(date +%c)" >> /home/ec2-user/action/deploy.log
