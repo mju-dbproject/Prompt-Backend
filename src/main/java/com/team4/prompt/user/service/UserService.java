@@ -1,11 +1,13 @@
 package com.team4.prompt.user.service;
 
+import com.team4.prompt.user.controller.dto.ApproveUserRequest;
 import com.team4.prompt.user.controller.dto.UserInfoDto;
 import com.team4.prompt.user.controller.dto.UserUpdateDto;
 import com.team4.prompt.user.model.Role;
 import com.team4.prompt.user.model.User;
 import com.team4.prompt.user.repository.UserRepository;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
@@ -64,18 +66,17 @@ public class UserService {
         return user.getUserId();
     }
 
-    public boolean approveUser(String userId) {
-        Optional<User> userOp = userRepository.findByUserId(userId);
-        User user = userOp.orElseThrow(()-> new IllegalArgumentException("사용자가 존재하지"));
+    public void approveUser(ApproveUserRequest approveUserRequest) {
+        List<Long> approveIds = approveUserRequest.getApproveIdList();
+        approveIds.forEach(approveId -> {
+            User user = userRepository.findById(approveId)
+                    .orElseThrow(() -> new IllegalArgumentException("사용자가 존재하지 않습니다."));
+            if(!user.isApproved()){
+                user.setApproved(true);
+                user.approveEmployee(Role.USER);
+                userRepository.save(user);
+            }
 
-        if(user.isApproved()) {
-            throw new IllegalArgumentException("이미 승인된");
-        }
-
-        user.setApproved(true);
-        user.approveEmployee(Role.USER);
-        userRepository.save(user);
-
-        return true;
+        });
     }
 }

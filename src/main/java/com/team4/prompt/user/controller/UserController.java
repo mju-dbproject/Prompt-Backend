@@ -59,10 +59,11 @@ public class UserController {
         return userService.findUserIdByNameAndEmail(findUserIdRequest.getName(), findUserIdRequest.getEmail());
     }
 
-    @PostMapping("/approval/{userId}")
+    @PostMapping("/approval")
     @PreAuthorize("hasRole('ADMIN')")
-    public boolean approvedUser(@PathVariable String userId, @CurrentUser User user) {
-        return userService.approveUser(userId);
+    public void approvedUser(@RequestBody ApproveUserRequest approveUserRequest) {
+        userService.approveUser(approveUserRequest);
     }
-}
 
+
+}
