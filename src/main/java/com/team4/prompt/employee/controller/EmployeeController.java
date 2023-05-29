@@ -1,5 +1,6 @@
 package com.team4.prompt.employee.controller;
 
+import com.team4.prompt.employee.controller.dto.EmployeeCountDto;
 import com.team4.prompt.employee.controller.dto.EmployeeListDto;
 import com.team4.prompt.employee.service.EmployeeService;
 import com.team4.prompt.user.model.User;
@@ -38,5 +39,11 @@ public class EmployeeController {
     public void promoteEmployee(@RequestBody User user) {
         User clickedEmployee = userService.findUserById(user.getId());
         employeeService.promoteEmployee(clickedEmployee);
+    }
+
+    @GetMapping("/admin/count")
+    @PreAuthorize("hasRole('ADMIN')")
+    public EmployeeCountDto getProjectCount() {
+        return employeeService.getProjectCount();
     }
 }

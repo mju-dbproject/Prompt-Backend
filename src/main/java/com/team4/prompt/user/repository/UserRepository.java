@@ -28,7 +28,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRoleNotAndPosition(Role role, Position position);
     List<User> findByRoleNotAndRank(Role role, Rank rank);
     List<User> findByRoleNotAndSkillContainingIgnoreCase(Role role, String skill);
-
+    List<User> findByApproved(boolean isApproved);
+    List<User> findByApprovedAndPosition(boolean isApproved, Position position);
+    List<User> findByApprovedAndPositionNot(boolean isApproved, Position position);
 
 
     Optional<User> findById(Long id);
