@@ -5,6 +5,7 @@ import com.team4.prompt.manpower.controller.dto.ManpowerListDto;
 import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.manpower.domain.Task;
 import com.team4.prompt.manpower.repository.ManpowerRepository;
+import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.user.model.Position;
 import com.team4.prompt.user.model.Rank;
@@ -31,6 +32,12 @@ public class ManpowerService {
     public boolean isEmployeeAvailable(User employee){
         List<ManPower> manPowers = manpowerRepository.findByUser(employee).stream().filter(manPower -> manPower.getEndDate() == null).toList();
         return manPowers.size() < 3;
+    }
+
+    public void checkAlreadyManpower(User user, Project project) {
+        if(manpowerRepository.findByUserAndProject(user, project)!=0){
+            throw new IllegalArgumentException("");
+        }
     }
 
     public ManpowerListDto  getAvailableEmployeeForProject(String projectNumber){

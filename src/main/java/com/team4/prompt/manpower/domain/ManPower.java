@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -41,6 +42,8 @@ public class ManPower {
 
     private LocalDateTime endDate;
 
+    private boolean isFinished;
+
     @Builder
     public ManPower(Task task, User user, Project project, LocalDateTime startDate, LocalDateTime endDate) {
         this.task = task;
@@ -48,5 +51,13 @@ public class ManPower {
         this.project = project;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public void finish() {
+        if(endDate!=null || isFinished){
+            return;
+        }
+        this.endDate = LocalDateTime.now();
+        this.isFinished = true;
     }
 }

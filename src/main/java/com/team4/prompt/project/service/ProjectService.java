@@ -66,6 +66,7 @@ public class ProjectService {
                 projectUpdateRequest.getBudget(), projectUpdateRequest.getDescription());
         projectUpdateRequest.getAddEmployeeList().forEach(addEmployee -> {
             User user = userService.findUserById(addEmployee.getId());
+            manpowerService.checkAlreadyManpower(user, project);
             ManPower manPower = ManPower
                     .builder()
                     .project(project)
@@ -75,13 +76,13 @@ public class ProjectService {
                     .build();
             project.addManpower(manPower);
         });
+        projectRepository.save(project);
 
         projectUpdateRequest.getEndManpowerList().forEach(endManpowerId -> {
             ManPower manpower = manpowerService.findManpowerById(endManpowerId);
-            project.deleteManpower(manpower);
+            manpower.finish();
+            manpowerRepository.save(manpower);
         });
-
-        projectRepository.save(project);
     }
 
     public ProjectDetailsDto getProjectDetails(Long id) {
@@ -119,4 +120,5 @@ public class ProjectService {
         return projectRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException(""));
     }
+
 }
