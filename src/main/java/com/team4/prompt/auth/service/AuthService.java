@@ -22,7 +22,8 @@ public class AuthService {
         Authentication authentication = authenticationManager.authenticate(authToken);
         PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
         String token = jwtProvider.createToken(principal);
+        String name = principal.getUser().getName();
         String role = principal.getAuthorities().stream().findFirst().orElseThrow(() -> new IllegalArgumentException("")).getAuthority();
-        return new LoginResponse(TOKEN_TYPE, token, role);
+        return new LoginResponse(TOKEN_TYPE, token, name, role);
     }
 }

@@ -2,6 +2,7 @@ package com.team4.prompt.manpower.domain;
 
 import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.user.model.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,7 +33,7 @@ public class ManPower {
     @JoinColumn(name = "employee_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
     private Project project;
 
