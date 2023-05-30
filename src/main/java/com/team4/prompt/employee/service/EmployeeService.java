@@ -49,7 +49,7 @@ public class EmployeeService {
         List<User> employeeList;
         switch (type) {
             case "name" -> employeeList = userRepository.findByNameContaining(keyword);
-            case "employeeNumber" -> employeeList = userRepository.findByEmployeeNumberContaining(keyword);
+            case "employeeNumber" -> employeeList = userRepository.findByEmployeeNumber(keyword);
             case "rank" -> employeeList = userRepository.findByRank(Rank.of(keyword));
             case "position" -> employeeList = userRepository.findByPosition(Position.of(keyword));
             case "skill" -> employeeList = userRepository.findBySkillContainingIgnoreCase(keyword);
