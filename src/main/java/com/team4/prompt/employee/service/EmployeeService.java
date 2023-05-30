@@ -1,5 +1,6 @@
 package com.team4.prompt.employee.service;
 
+import com.team4.prompt.employee.controller.dto.EmployeeCountDto;
 import com.team4.prompt.employee.controller.dto.EmployeeDto;
 import com.team4.prompt.employee.controller.dto.EmployeeListDto;
 import com.team4.prompt.user.model.Position;
@@ -49,7 +50,7 @@ public class EmployeeService {
         List<User> employeeList;
         switch (type) {
             case "name" -> employeeList = userRepository.findByNameContaining(keyword);
-            case "employeeNumber" -> employeeList = userRepository.findByEmployeeNumber(keyword);
+            case "employeeNumber" -> employeeList = userRepository.findByEmployeeNumberContaining(keyword);
             case "rank" -> employeeList = userRepository.findByRank(Rank.of(keyword));
             case "position" -> employeeList = userRepository.findByPosition(Position.of(keyword));
             case "skill" -> employeeList = userRepository.findBySkillContainingIgnoreCase(keyword);
@@ -61,5 +62,13 @@ public class EmployeeService {
 
         List<EmployeeDto> employeeDtoList = employeeList.stream().map(EmployeeDto::new).toList();
         return new EmployeeListDto(employeeDtoList);
+    }
+
+    public EmployeeCountDto getProjectCount() {
+        int all = userRepository.findByApproved(true).size();
+        int developer = userRepository.findByApprovedAndPosition(true, Position.DEVELOPER).size();
+        int notDeveloper = userRepository.findByApprovedAndPositionNot(true, Position.DEVELOPER).size();
+
+        return new EmployeeCountDto(all,developer,notDeveloper);
     }
 }

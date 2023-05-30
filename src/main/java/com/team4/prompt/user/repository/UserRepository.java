@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByPositionAndApproved(Position position, boolean approved);
     List<User> findByPositionNotAndApproved(Position position, boolean approved);
     List<User> findByNameContaining(String name);
-    List<User> findByEmployeeNumber(String employeeNumber);
+    List<User> findByEmployeeNumberContaining(String employeeNumber);
     List<User> findByRank(Rank rank);
     List<User> findByPosition(Position position);
     List<User> findBySkillContainingIgnoreCase(String skill);
@@ -28,7 +28,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByRoleNotAndPosition(Role role, Position position);
     List<User> findByRoleNotAndRank(Role role, Rank rank);
     List<User> findByRoleNotAndSkillContainingIgnoreCase(Role role, String skill);
-
+    List<User> findByApproved(boolean isApproved);
+    List<User> findByApprovedAndPosition(boolean isApproved, Position position);
+    List<User> findByApprovedAndPositionNot(boolean isApproved, Position position);
 
 
     Optional<User> findById(Long id);
