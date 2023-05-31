@@ -44,13 +44,15 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 
     private BooleanExpression betweenDate(String startDate, String endDate) {
         if(endDate == null) {
-            endDate = LocalDateTime.now().toLocalDate().toString();
+            LocalDate now = LocalDateTime.now().toLocalDate();
+            endDate = now.getYear() + "-" + now.getMonthValue() + "-" + now.getDayOfMonth();
         }
         if(startDate == null) {
-            startDate = LocalDate.of(2010, 1, 1).toString();
+            startDate = "2010-1-1";
         }
-        LocalDateTime sDate = LocalDateTime.parse(startDate + " 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        LocalDateTime eDate = LocalDateTime.parse(endDate + " 23:59:59", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        LocalDateTime sDate = generateStartDateTime(startDate);
+        LocalDateTime eDate = generateEndDateTime(endDate);
         return QProject.project.createDate.between(sDate, eDate);
     }
 
@@ -73,5 +75,21 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         }
         return QProject.project.projectNumber.containsIgnoreCase(projectNumber);
     }
+
+    private LocalDateTime generateStartDateTime(String datetime) {
+        String[] s = datetime.split("-");
+        int year = Integer.parseInt(s[0]);
+        int month = Integer.parseInt(s[1]);
+        int day = Integer.parseInt(s[2]);
+        return LocalDateTime.of(year, month, day, 0,0);
+    }
+    private LocalDateTime generateEndDateTime(String datetime) {
+        String[] s = datetime.split("-");
+        int year = Integer.parseInt(s[0]);
+        int month = Integer.parseInt(s[1]);
+        int day = Integer.parseInt(s[2]);
+        return LocalDateTime.of(year, month, day, 23,59);
+    }
+
 
 }
