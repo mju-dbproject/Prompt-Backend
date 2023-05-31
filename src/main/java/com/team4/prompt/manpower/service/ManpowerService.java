@@ -1,7 +1,7 @@
 package com.team4.prompt.manpower.service;
 
-import com.team4.prompt.manpower.controller.dto.ManpowerDto;
-import com.team4.prompt.manpower.controller.dto.ManpowerListDto;
+import com.team4.prompt.employee.controller.dto.EmployeeDto;
+import com.team4.prompt.employee.controller.dto.EmployeeListDto;
 import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.manpower.domain.Task;
 import com.team4.prompt.manpower.repository.ManpowerRepository;
@@ -40,9 +40,9 @@ public class ManpowerService {
         }
     }
 
-    public ManpowerListDto getAvailableEmployeeForProject(String projectNumber){
+    public EmployeeListDto getAvailableEmployeeForProject(Long projectId){
         List<User> availableEmployees = new ArrayList<>();
-        List<ManPower> assignedEmployees = manpowerRepository.findByProjectProjectNumber(projectNumber);
+        List<ManPower> assignedEmployees = manpowerRepository.findByProjectId(projectId);
         List<Task> PMPLEmployees = Arrays.asList(Task.PM,Task.PL);
         List<User> allEmployees = userRepository.findByRoleNot(Role.ADMIN);
 
@@ -51,17 +51,17 @@ public class ManpowerService {
                     .anyMatch(manPower -> manPower.getUser().equals(employee));
             boolean isAssignedToPMPLTasks = manpowerRepository.findByUserAndTaskIn(employee,PMPLEmployees)
                     .stream()
-                    .anyMatch(manPower -> !manPower.getProject().getProjectNumber().equals(projectNumber) && manPower.getProject().getStatus() != ProjectStatus.FINISH);
+                    .anyMatch(manPower -> !manPower.getProject().getId().equals(projectId) && manPower.getProject().getStatus() != ProjectStatus.FINISH);
             if (!isAssignedToProject && !isAssignedToPMPLTasks & isEmployeeAvailable(employee)){
                 availableEmployees.add(employee);
             }
         }
-        List<ManpowerDto> manpowerDtoList = availableEmployees.stream().map(ManpowerDto::new).toList();
-        return new ManpowerListDto(manpowerDtoList);
+        List<EmployeeDto> employeeDtoList = availableEmployees.stream().map(EmployeeDto::new).toList();
+        return new EmployeeListDto(employeeDtoList);
     }
-    public ManpowerListDto SearchAvailableManpowerForProject(String projectNumber, String type, String keyword) {
+    public EmployeeListDto SearchAvailableManpowerForProject(Long projectId, String type, String keyword) {
         List<User> availableEmployees = new ArrayList<>();
-        List<ManPower> assignedEmployees = manpowerRepository.findByProjectProjectNumber(projectNumber);
+        List<ManPower> assignedEmployees = manpowerRepository.findByProjectId(projectId);
         List<Task> PMPLEmployees = Arrays.asList(Task.PM,Task.PL);
         List<User> allEmployees = new ArrayList<>();
         switch (type) {
@@ -76,16 +76,16 @@ public class ManpowerService {
                         .anyMatch(manPower -> manPower.getUser().equals(employee));
                 boolean isAssignedToPMPLTasks = manpowerRepository.findByUserAndTaskIn(employee,PMPLEmployees)
                         .stream()
-                        .anyMatch(manPower -> !manPower.getProject().getProjectNumber().equals(projectNumber) && manPower.getProject().getStatus() != ProjectStatus.FINISH);
+                        .anyMatch(manPower -> !manPower.getProject().getId().equals(projectId) && manPower.getProject().getStatus() != ProjectStatus.FINISH);
                 if (!isAssignedToProject && !isAssignedToPMPLTasks & isEmployeeAvailable(employee)){
                     availableEmployees.add(employee);
                 }
             }
-        List<ManpowerDto> manpowerDtoList = availableEmployees.stream().map(ManpowerDto::new).toList();
-        return new ManpowerListDto(manpowerDtoList);
+        List<EmployeeDto> employeeDtoList = availableEmployees.stream().map(EmployeeDto::new).toList();
+        return new EmployeeListDto(employeeDtoList);
     }
 
-    public ManpowerListDto getAvailableEmployeeForNewProject() {
+    public EmployeeListDto getAvailableEmployeeForNewProject() {
         List<User> availableEmployees = new ArrayList<>();
         List<Task> PMPLEmployees = Arrays.asList(Task.PM, Task.PL);
         List<User> allEmployees = userRepository.findByRoleNot(Role.ADMIN);
@@ -99,11 +99,11 @@ public class ManpowerService {
             }
         }
 
-        List<ManpowerDto> manpowerDtoList = availableEmployees.stream().map(ManpowerDto::new).toList();
-        return new ManpowerListDto(manpowerDtoList);
+        List<EmployeeDto> employeeDtoList = availableEmployees.stream().map(EmployeeDto::new).toList();
+        return new EmployeeListDto(employeeDtoList);
     }
 
-    public ManpowerListDto searchAvailableManpowerForNewProject(String type, String keyword) {
+    public EmployeeListDto searchAvailableManpowerForNewProject(String type, String keyword) {
         List<User> availableEmployees = new ArrayList<>();
         List<Task> PMPLEmployees = Arrays.asList(Task.PM, Task.PL);
         List<User> allEmployees = new ArrayList<>();
@@ -124,7 +124,7 @@ public class ManpowerService {
             }
         }
 
-        List<ManpowerDto> manpowerDtoList = availableEmployees.stream().map(ManpowerDto::new).toList();
-        return new ManpowerListDto(manpowerDtoList);
+        List<EmployeeDto> employeeDtoList = availableEmployees.stream().map(EmployeeDto::new).toList();
+        return new EmployeeListDto(employeeDtoList);
     }
 }
