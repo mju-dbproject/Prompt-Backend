@@ -57,7 +57,7 @@ INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) 
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (65, '2023-05-01 00:00:00.000000', '2023-02-01 00:00:00.000000', 'PL', 17, 54);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (66, '2023-05-01 00:00:00.000000', '2023-02-01 00:00:00.000000', 'PM', 17, 72);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (67, '2023-05-01 00:00:00.000000', '2023-02-01 00:00:00.000000', 'ANALYSIS', 17, 85);
-INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (68, '2023-05-01 00:00:00.000000', '2023-02-01 00:00:00.000000', 'PROGRAMMER', 15, 27);
+INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (68, '2023-05-01 00:00:00.000000', '2023-02-01 00:00:00.000000', 'PROGRAMMER', 15, 5);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (69, '2023-05-01 00:00:00.000000', '2023-02-01 00:00:00.000000', 'PROGRAMMER', 15, 28);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (70, '2023-05-01 00:00:00.000000', '2023-02-01 00:00:00.000000', 'PL', 15, 55);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (71, '2023-05-01 00:00:00.000000', '2023-02-01 00:00:00.000000', 'PM', 15, 71);
@@ -103,7 +103,7 @@ INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) 
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (111, null, '2023-04-01 00:00:00.000000', 'PROGRAMMER', 25, 47);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (112, null, '2023-04-01 00:00:00.000000', 'PROGRAMMER', 26, 51);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (113, null, '2023-04-01 00:00:00.000000', 'PROGRAMMER', 27, 52);
-INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (114, null, '2023-05-01 00:00:00.000000', 'PROGRAMMER', 28, 53);
+INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (114, null, '2023-05-01 00:00:00.000000', 'PROGRAMMER', 28, 5);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (115, null, '2023-05-01 00:00:00.000000', 'PROGRAMMER', 29, 54);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (116, null, '2023-05-01 00:00:00.000000', 'PROGRAMMER', 30, 39);
 INSERT INTO man_power (id, end_date, start_date, task, project_id, employee_id) VALUES (117, null, '2023-03-01 00:00:00.000000', 'PROGRAMMER', 22, 27);

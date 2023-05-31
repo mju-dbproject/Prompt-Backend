@@ -65,7 +65,7 @@ public class ProjectController {
     }
 
     @GetMapping("/project")
-    public ProjectListDto getAllProjectFromEmployee(@CurrentUser User user, @RequestParam(required = false) Integer status) {
+    public ProjectListDto getAllProjectFromEmployee(@CurrentUser User user, @RequestParam Integer status) {
         return projectService.getAllProjectForEmployee(user, status);
     }
     @GetMapping("/project/count")

@@ -103,7 +103,7 @@ public class ProjectService {
 
     public ProjectListDto getAllProjectForEmployee(User user, Integer status) {
         List<ManPower> manpowerList = manpowerRepository.findByUser(user);
-        if(status == null){
+        if(status ==0){
             List<ProjectDto> projectDtoList = manpowerList.stream().map(ManPower::getProject).map(ProjectDto::new).toList();
             return new ProjectListDto(projectDtoList);
         }
