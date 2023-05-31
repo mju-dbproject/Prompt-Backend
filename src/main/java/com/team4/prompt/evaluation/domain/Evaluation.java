@@ -36,6 +36,7 @@ public class Evaluation {
     private String contents;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private EvaluationType type;
 
     @Column(nullable = false)
