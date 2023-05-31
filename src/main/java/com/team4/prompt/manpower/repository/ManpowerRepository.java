@@ -12,8 +12,8 @@ import org.springframework.security.core.parameters.P;
 
 public interface ManpowerRepository extends JpaRepository<ManPower, Long> {
 
-    List<ManPower> findByProjectProjectNumber(String projectNumber);
-    @Query("SELECT m FROM ManPower m WHERE m.user = :user AND m.task IN :tasks")
+    List<ManPower> findByProjectId(Long projectId);
+    @Query("SELECT m FROM ManPower m WHERE m.user = :user AND m.task IN :tasks AND  m.endDate = null ")
     List<ManPower> findByUserAndTaskIn(User user, List<Task> tasks);
     Optional<ManPower> findById(Long id);
     @Query("select m from ManPower m join fetch User u where m.user = :user")
