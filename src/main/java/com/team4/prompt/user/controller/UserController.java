@@ -58,7 +58,7 @@ public class UserController {
     //아이디찾기
     @PostMapping("/find-id")
     public FindUserIdResponse findUserId(@RequestBody FindUserIdRequest findUserIdRequest) {
-        String userId = userService.findUserIdByNameAndEmail(findUserIdRequest.getName(), findUserIdRequest.getEmail());
+        String userId = userService.findUserIdByNameAndRegisterNumber(findUserIdRequest.getName(), findUserIdRequest.getRegisterNumber());
         return new FindUserIdResponse(userId);
     }
 
@@ -81,6 +81,5 @@ public class UserController {
     public ApproveListResponse getApprovalList(){
         return userService.getApprovalList();
     }
-
 
 }

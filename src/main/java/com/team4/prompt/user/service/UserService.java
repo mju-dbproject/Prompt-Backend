@@ -64,8 +64,8 @@ public class UserService {
         return new UserInfoDto(user);
     }
 
-    public String findUserIdByNameAndEmail(String name, String email) {
-        User user = userRepository.findByNameAndEmail(name, email)
+    public String findUserIdByNameAndRegisterNumber(String name, String registerNumber) {
+        User user = userRepository.findByNameAndRegisterNumber(name, registerNumber)
                 .orElseThrow(() -> new IllegalArgumentException(""));
 
         return user.getUserId();
