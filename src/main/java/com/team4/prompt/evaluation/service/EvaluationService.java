@@ -28,11 +28,13 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.team4.prompt.manpower.domain.Task.PM;
 import static com.team4.prompt.user.model.Role.ADMIN;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class EvaluationService {
 
@@ -108,6 +110,7 @@ public class EvaluationService {
         )).toList();
     }
 
+    @Transactional
     public void saveEvaluation(User user, EvaluationDto evaluationDto) {
         Long projectId = evaluationDto.getProjectId();
         Long evaluatedId = evaluationDto.getEvaluatedId();
