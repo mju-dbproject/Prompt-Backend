@@ -87,6 +87,16 @@ public class Project {
     }
 
     public void changeStatus(ProjectStatus projectStatus) {
+        if(projectStatus==ProjectStatus.PROGRESS){
+            if(this.startDate==null){
+                this.startDate = LocalDateTime.now();
+            }
+        }
+        if(projectStatus==ProjectStatus.FINISH) {
+            if(this.endDate==null){
+                this.endDate = LocalDateTime.now();
+            }
+        }
         this.status = projectStatus;
     }
 

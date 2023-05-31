@@ -38,7 +38,7 @@ public class ProjectController {
 
     @PatchMapping("/admin/project/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public void changProjectStatus(@PathVariable Long id, Map<String , Integer> projectStatus) {
+    public void changProjectStatus(@PathVariable Long id, @RequestBody Map<String , Integer> projectStatus) {
         projectService.changeProjectStatus(id, projectStatus.get("status"));
     }
 
