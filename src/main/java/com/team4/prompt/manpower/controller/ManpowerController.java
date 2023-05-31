@@ -24,15 +24,15 @@ public class ManpowerController {
     public EmployeeListDto searchManpower(@RequestParam String type, String keyword){
         return manpowerService.searchAvailableManpowerForNewProject(type, keyword);
     }
-    @GetMapping("/admin/edit/available/all")
+    @GetMapping("/admin/edit/available/all/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public EmployeeListDto getAllManpower(@RequestParam Long id){
+    public EmployeeListDto getAllManpower(@PathVariable Long id){
         return manpowerService.getAvailableEmployeeForProject(id);
     }
 
-    @GetMapping("/admin/edit/available/search")
+    @GetMapping("/admin/edit/available/search/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public EmployeeListDto searchManpower(@RequestParam Long id,String type, String keyword ){
+    public EmployeeListDto searchManpower(@PathVariable Long id ,@RequestParam String type, String keyword ){
         return manpowerService.SearchAvailableManpowerForProject(id,type, keyword);
     }
 }
