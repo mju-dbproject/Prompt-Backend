@@ -37,6 +37,7 @@ public class SecurityConfig {
                         API_PREFIX + "/auth/login",
                         API_PREFIX + "/user/check-id",
                         API_PREFIX + "/user/find-id",
+                        API_PREFIX + "/user/password",
                         API_PREFIX + "/evaluation/project/detail",
                         API_PREFIX + "/health-check"
                 ).permitAll()

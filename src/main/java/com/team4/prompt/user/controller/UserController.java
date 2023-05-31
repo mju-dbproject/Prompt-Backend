@@ -36,11 +36,10 @@ public class UserController {
         return new CheckIdResponse(isNotDuplicated);
     }
 
-    @PutMapping("/password")
-    public void changePassword(@CurrentUser User user,
-                               @RequestBody ChangePasswordRequest changePasswordRequest) {
+    @PostMapping("/password")
+    public void changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
 
-        userPasswordService.changePassword(user, changePasswordRequest);
+        userPasswordService.changePassword(changePasswordRequest);
     }
 
     //내 정보 수정
