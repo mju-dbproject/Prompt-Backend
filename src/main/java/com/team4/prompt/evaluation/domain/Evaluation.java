@@ -21,7 +21,11 @@ public class Evaluation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "evaluated_id")
-    private ManPower manPower;
+    private ManPower evaluated;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "evaluating_id")
+    private ManPower evaluating;
 
     @Column(nullable = false)
     private String performance;
@@ -32,17 +36,18 @@ public class Evaluation {
     private String contents;
 
     @Column(nullable = false)
-    private String type;
+    private EvaluationType type;
 
     @Column(nullable = false)
     private LocalDateTime endDate;
 
 
     @Builder
-    public Evaluation(Project project, ManPower manPower, String performance, String communication,
-                      String contents, String type, LocalDateTime endDate) {
+    public Evaluation(Project project, ManPower evaluated, ManPower evaluating, String performance, String communication,
+                      String contents, EvaluationType type, LocalDateTime endDate) {
         this.project = project;
-        this.manPower = manPower;
+        this.evaluated = evaluated;
+        this.evaluating = evaluating;
         this.performance = performance;
         this.communication = communication;
         this.contents = contents;

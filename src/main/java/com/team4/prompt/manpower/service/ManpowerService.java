@@ -40,6 +40,11 @@ public class ManpowerService {
         }
     }
 
+    public ManPower findManpowerByUserAndProject(User user, Project project) {
+        System.out.println("ssss");
+        return manpowerRepository.findByUserAndProject(user, project).orElseThrow(() -> new IllegalArgumentException(""));
+    }
+
     public EmployeeListDto getAvailableEmployeeForProject(Long projectId){
         List<User> availableEmployees = new ArrayList<>();
         List<ManPower> assignedEmployees = manpowerRepository.findByProjectId(projectId);
