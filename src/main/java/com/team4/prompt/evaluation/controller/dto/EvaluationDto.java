@@ -12,11 +12,7 @@ public class EvaluationDto {
     private final String communication;
     private final String contents;
     private final String type;
-    private LocalDateTime endDate;
 
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
 
     public EvaluationDto(Long projectId, Long evaluatedId, String performance, String communication,
                          String contents, String type) {

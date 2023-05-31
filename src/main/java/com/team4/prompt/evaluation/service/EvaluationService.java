@@ -113,14 +113,6 @@ public class EvaluationService {
         Long projectId = evaluationDto.getProjectId();
         Long evaluatedId = evaluationDto.getEvaluatedId();
 
-        Optional<ManPower> manPowerOp = manpowerRepository.findById(evaluatedId);
-
-        ManPower manPower = manPowerOp.orElseThrow(() -> new NoSuchElementException("" ));
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException(""));
-
-        LocalDateTime endDate = project.getEndDate();
-        evaluationDto.setEndDate(endDate);
 
         Evaluation evaluation = Evaluation.builder()
                 .project(project)

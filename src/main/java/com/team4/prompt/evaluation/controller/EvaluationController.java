@@ -27,12 +27,12 @@ public class EvaluationController {
         return evaluationService.getProjectsForEvaluation(user);
     }
 
-    @GetMapping("/check")
+    @PostMapping("/check")
     public DoneEvaluateResponse checkDone(@CurrentUser User user, @RequestBody DoneEvaluateRequest doneEvaluateRequest){
         return evaluationService.checkDone(user, doneEvaluateRequest);
     }
 
-    @GetMapping("/info")
+    @PostMapping("/info")
     public EvaluationDetail info(@CurrentUser User user, @RequestBody DoneEvaluateRequest doneEvaluateRequest) {
         return evaluationService.getEvaluationDetails(user, doneEvaluateRequest);
     }
