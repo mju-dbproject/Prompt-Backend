@@ -40,7 +40,7 @@ public class ManpowerService {
         }
     }
 
-    public ManpowerListDto  getAvailableEmployeeForProject(String projectNumber){
+    public ManpowerListDto getAvailableEmployeeForProject(String projectNumber){
         List<User> availableEmployees = new ArrayList<>();
         List<ManPower> assignedEmployees = manpowerRepository.findByProjectProjectNumber(projectNumber);
         List<Task> PMPLEmployees = Arrays.asList(Task.PM,Task.PL);

@@ -85,6 +85,13 @@ public class ProjectService {
         });
     }
 
+    @Transactional
+    public void changeProjectStatus(Long id, int status) {
+        Project project = findProjectById(id);
+        project.changeStatus(ProjectStatus.of(status));
+        projectRepository.save(project);
+    }
+
     public ProjectDetailsDto getProjectDetails(Long id) {
         Project project = findProjectById(id);
         return ProjectDetailsDto.from(project);

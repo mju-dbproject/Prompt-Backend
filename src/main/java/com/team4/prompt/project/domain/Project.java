@@ -86,8 +86,8 @@ public class Project {
         manPowerList.add(manPower);
     }
 
-    public void deleteManpower(ManPower manPower) {
-        manPowerList.remove(manPower);
+    public void changeStatus(ProjectStatus projectStatus) {
+        this.status = projectStatus;
     }
 
     public void giveProjectNumber(int createOrder){

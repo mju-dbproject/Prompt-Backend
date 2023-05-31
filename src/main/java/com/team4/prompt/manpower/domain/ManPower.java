@@ -42,8 +42,6 @@ public class ManPower {
 
     private LocalDateTime endDate;
 
-    private boolean isFinished;
-
     @Builder
     public ManPower(Task task, User user, Project project, LocalDateTime startDate, LocalDateTime endDate) {
         this.task = task;
@@ -54,10 +52,9 @@ public class ManPower {
     }
 
     public void finish() {
-        if(endDate!=null || isFinished){
+        if(endDate!=null){
             return;
         }
         this.endDate = LocalDateTime.now();
-        this.isFinished = true;
     }
 }

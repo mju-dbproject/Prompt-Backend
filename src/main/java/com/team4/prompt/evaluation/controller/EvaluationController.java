@@ -24,20 +24,6 @@ public class EvaluationController {
         return evaluationService.getProjectsForEvaluation(user);
     }
 
-    @GetMapping("/employee/list")
-    public List<String> getProjectPeer(@RequestParam Long projectId, @CurrentUser User user) {
-        return evaluationService.getProjectPeer(projectId, user);
-    }
-
-    @GetMapping("/type")
-    public List<String> gerEvaluationTypeForAdmin(@RequestParam Long projectId, @CurrentUser User user) {
-        return evaluationService.getAvailableEvaluations(projectId, user);
-    }
-
-    @GetMapping("/project/detail")
-    public ProjectDto getProjectDetails(@RequestParam Long projectId) {
-        return evaluationService.getProjectDetails(projectId);
-    }
 
     @PostMapping("/save")
     public void saveEvaluation(@CurrentUser User user, @RequestBody EvaluationDto evaluationDto) {

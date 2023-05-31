@@ -9,9 +9,11 @@ import com.team4.prompt.project.cotroller.dto.ProjectUpdateRequest;
 import com.team4.prompt.project.service.ProjectService;
 import com.team4.prompt.user.model.User;
 import jakarta.validation.Valid;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +38,12 @@ public class ProjectController {
     @PreAuthorize("hasRole('ADMIN')")
     public void updateProject(@PathVariable Long id, @RequestBody @Valid ProjectUpdateRequest projectUpdateRequest) {
         projectService.updateProject(id, projectUpdateRequest);
+    }
+
+    @PatchMapping("/admin/project/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void changProjectStatus(@PathVariable Long id, Map<String , Integer> projectStatus) {
+        projectService.changeProjectStatus(id, projectStatus.get("status"));
     }
 
     @GetMapping("/project/{id}")
