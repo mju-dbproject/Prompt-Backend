@@ -3,6 +3,7 @@ package com.team4.prompt.manpower.repository;
 import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.manpower.domain.Task;
 import com.team4.prompt.project.domain.Project;
+import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.user.model.User;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import org.springframework.security.core.parameters.P;
 public interface ManpowerRepository extends JpaRepository<ManPower, Long> {
 
     List<ManPower> findByProjectId(Long projectId);
+    List<ManPower> findByUserAndProject_Status(User user, ProjectStatus status);
     @Query("SELECT m FROM ManPower m WHERE m.user = :user AND m.task IN :tasks AND  m.endDate = null ")
     List<ManPower> findByUserAndTaskIn(User user, List<Task> tasks);
     Optional<ManPower> findById(Long id);

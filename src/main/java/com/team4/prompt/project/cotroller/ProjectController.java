@@ -1,11 +1,7 @@
 package com.team4.prompt.project.cotroller;
 
 import com.team4.prompt.common.CurrentUser;
-import com.team4.prompt.project.cotroller.dto.ProjectCountDto;
-import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
-import com.team4.prompt.project.cotroller.dto.ProjectDetailsDto;
-import com.team4.prompt.project.cotroller.dto.ProjectListDto;
-import com.team4.prompt.project.cotroller.dto.ProjectUpdateRequest;
+import com.team4.prompt.project.cotroller.dto.*;
 import com.team4.prompt.project.service.ProjectService;
 import com.team4.prompt.user.model.User;
 import jakarta.validation.Valid;
@@ -71,6 +67,10 @@ public class ProjectController {
     @GetMapping("/project")
     public ProjectListDto getAllProjectFromEmployee(@CurrentUser User user, @RequestParam(required = false) Integer status) {
         return projectService.getAllProjectForEmployee(user, status);
+    }
+    @GetMapping("/project/count")
+    public ProjectCountFromEmployeeDto getProjectCountFromEmployee(@CurrentUser User user) {
+        return projectService.getProjectCountFromEmployee(user);
     }
 
 }
