@@ -108,25 +108,27 @@ public class EvaluationService {
         )).toList();
     }
 
-/**
     public void saveEvaluation(User user, EvaluationDto evaluationDto) {
         Long projectId = evaluationDto.getProjectId();
         Long evaluatedId = evaluationDto.getEvaluatedId();
+        Project project = projectService.findProjectById(projectId);
 
+        ManPower evaluated = manpowerService.findManpowerById(evaluatedId);
+        ManPower evaluating = manpowerService.findManpowerByUserAndProject(user, project);
 
         Evaluation evaluation = Evaluation.builder()
                 .project(project)
-                .manPower(manPower)
+                .evaluated(evaluated)
+                .evaluating(evaluating)
                 .performance(evaluationDto.getPerformance())
                 .communication(evaluationDto.getCommunication())
                 .contents(evaluationDto.getContents())
-                .type(evaluationDto.getType())
-                .endDate(evaluationDto.getEndDate())
+                .type(EvaluationType.of(evaluationDto.getType()))
+                .endDate(LocalDateTime.now())
                 .build();
 
         evaluationRepository.save(evaluation);
 
     }
- **/
 
 }

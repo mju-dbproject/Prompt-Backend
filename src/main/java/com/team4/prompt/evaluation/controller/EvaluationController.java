@@ -37,11 +37,9 @@ public class EvaluationController {
         return evaluationService.getEvaluationDetails(user, doneEvaluateRequest);
     }
 
-/**
-    @PostMapping("/save")
+    @PostMapping()
     public void saveEvaluation(@CurrentUser User user, @RequestBody EvaluationDto evaluationDto) {
         evaluationService.saveEvaluation(user, evaluationDto);
     }
-    **/
 
 }
