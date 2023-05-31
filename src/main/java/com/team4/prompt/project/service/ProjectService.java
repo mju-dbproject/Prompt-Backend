@@ -4,12 +4,7 @@ import com.team4.prompt.manpower.domain.ManPower;
 import com.team4.prompt.manpower.domain.Task;
 import com.team4.prompt.manpower.repository.ManpowerRepository;
 import com.team4.prompt.manpower.service.ManpowerService;
-import com.team4.prompt.project.cotroller.dto.ProjectCountDto;
-import com.team4.prompt.project.cotroller.dto.ProjectCreateRequest;
-import com.team4.prompt.project.cotroller.dto.ProjectDetailsDto;
-import com.team4.prompt.project.cotroller.dto.ProjectDto;
-import com.team4.prompt.project.cotroller.dto.ProjectListDto;
-import com.team4.prompt.project.cotroller.dto.ProjectUpdateRequest;
+import com.team4.prompt.project.cotroller.dto.*;
 import com.team4.prompt.project.domain.Project;
 import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.project.repository.ProjectRepository;
@@ -128,4 +123,12 @@ public class ProjectService {
                 .orElseThrow(() -> new IllegalArgumentException(""));
     }
 
+    public ProjectCountFromEmployeeDto getProjectCountFromEmployee(User user) {
+        int all = manpowerRepository.findByUser(user).size();
+        int progress = manpowerRepository.findByUserAndProject_Status(user,ProjectStatus.PROGRESS).size();
+        int finish = manpowerRepository.findByUserAndProject_Status(user, ProjectStatus.FINISH).size();
+
+        return new ProjectCountFromEmployeeDto(all, progress, finish);
+
+    }
 }
