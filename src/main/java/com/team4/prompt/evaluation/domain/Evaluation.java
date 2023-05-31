@@ -28,10 +28,10 @@ public class Evaluation {
     private ManPower evaluating;
 
     @Column(nullable = false)
-    private String performance;
+    private int performance;
 
     @Column(nullable = false)
-    private String communication;
+    private int communication;
 
     private String contents;
 
@@ -43,7 +43,7 @@ public class Evaluation {
 
 
     @Builder
-    public Evaluation(Project project, ManPower evaluated, ManPower evaluating, String performance, String communication,
+    public Evaluation(Project project, ManPower evaluated, ManPower evaluating, int performance, int communication,
                       String contents, EvaluationType type, LocalDateTime endDate) {
         this.project = project;
         this.evaluated = evaluated;
