@@ -35,7 +35,7 @@ public class ManpowerService {
     }
 
     public void checkAlreadyManpower(User user, Project project) {
-        if(manpowerRepository.findByUserAndProject(user, project)!=0){
+        if(manpowerRepository.countByUserAndProject(user, project)!=0){
             throw new IllegalArgumentException("");
         }
     }

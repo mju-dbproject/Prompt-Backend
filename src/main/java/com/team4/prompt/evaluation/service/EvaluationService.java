@@ -1,5 +1,8 @@
 package com.team4.prompt.evaluation.service;
 
+import com.team4.prompt.evaluation.controller.dto.CanEvaluateProject;
+import com.team4.prompt.evaluation.controller.dto.CanEvaluatedProjectList;
+import com.team4.prompt.evaluation.controller.dto.EvaluatedDto;
 import com.team4.prompt.evaluation.controller.dto.EvaluationDto;
 import com.team4.prompt.evaluation.domain.Evaluation;
 import com.team4.prompt.evaluation.repository.EvaluationRepository;
@@ -11,6 +14,7 @@ import com.team4.prompt.project.domain.ProjectStatus;
 import com.team4.prompt.project.repository.ProjectRepository;
 import com.team4.prompt.user.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,64 +31,42 @@ public class EvaluationService {
     private final ManpowerRepository manpowerRepository;
     private final ProjectRepository projectRepository;
 
-
     //사용자가 이미 평가를 완료한 프로젝트 제외, 종료 상태인 프로젝트 리스트 가져오기
-    public List<ProjectDto> getProjectsForEvaluation(User user) {
+    public CanEvaluatedProjectList getProjectsForEvaluation(User user) {
         List<ManPower> manpowerList = manpowerRepository.findByUser(user);
-        List<ProjectDto> projectDtoList = new ArrayList<>();
 
-        for (ManPower manpower : manpowerList) {
-            Project project = manpower.getProject();
-
-            if (project.getStatus() == ProjectStatus.FINISH) {
-                boolean isEvaluated = evaluationRepository.existsByProjectAndManPower(project, manpower);
-
-                if (!isEvaluated) {
-                    ProjectDto projectDto = new ProjectDto(project);
-                    projectDtoList.add(projectDto);
-                }
-            }
-        }
-        return projectDtoList;
+        List<CanEvaluateProject> projectList = manpowerList.stream()
+                .filter(manPower -> manPower.getProject().getStatus().equals(ProjectStatus.FINISH))
+                .filter(manPower -> !evaluationRepository.existsByProjectAndManPower(manPower.getProject(), manPower))
+                .map(manPower -> new CanEvaluateProject(manPower.getProject().getId(), manPower.getProject().getName(),
+                        getAvailableEvaluationType(manPower), getProjectPeer(manPower.getProject(), manPower)))
+                .toList();
+        return new CanEvaluatedProjectList(projectList);
     }
 
     //가능한 평가 종류 리스트
-    public List<String> getAvailableEvaluations(Long projectId, User user) {
-        List<String> availableEvaluations = new ArrayList<>();
-        ManPower manPower = manpowerRepository.findByProjectIdAndUser(projectId, user);
+    public List<String> getAvailableEvaluationType(ManPower manPower) {
+        List<String> availableTypeList = new ArrayList<>();
 
-        if(user.getRole() == ADMIN) {
-            if (manPower.getTask() == PM) {
-                availableEvaluations.add("PM 평가");
-                availableEvaluations.add("동료 평가");
-                availableEvaluations.add("발주처 평가");
-            } else {
-                availableEvaluations.add("발주처 평가");
-            }
-        } else { availableEvaluations.add("동료 평가"); }
+        if(manPower.getTask().equals(PM)){
+            availableTypeList.add("PM 평가");
+            availableTypeList.add("발주처 평가");
+        }
+        else {
+            availableTypeList.add("동료 평가");
+        }
 
-        return availableEvaluations;
+        return availableTypeList;
     }
 
-    public List<String> getProjectPeer(Long projectId, User user) {
-        Optional<Project> projectOp = projectRepository.findById(projectId);
-        if (projectOp.isEmpty()) {
-            // 프로젝트가 존재하지 않는 경우
-            return Collections.emptyList();
-        }
+    public List<EvaluatedDto> getProjectPeer(Project project, ManPower evaluating) {
 
-        Project project = projectOp.get();
-        List<ManPower> peers = manpowerRepository.findPeersByProject(project);
-
-        List<String> peerList = new ArrayList<>();
-        for (ManPower manPower : peers) {
-            if (!manPower.getUser().getId().equals(user.getId())) {  // 현재 사용자는 목록에서 제외
-                String peerInfo = manPower.getUser().getEmployeeNumber() + " " + manPower.getUser().getName();
-                peerList.add(peerInfo);
-            }
-        }
-
-        return peerList;
+        List<ManPower> coworker = manpowerRepository.findManPowerWithEmployeeByProject(project);
+        return coworker.stream()
+                .filter(manPower -> !manPower.equals(evaluating))
+                .map(manPower -> new EvaluatedDto(
+                manPower.getId(), manPower.getUser().getEmployeeNumber(), manPower.getUser().getName()
+        )).toList();
     }
 
     //선택된 프로젝트 정보 출력

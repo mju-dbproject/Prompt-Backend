@@ -1,6 +1,7 @@
 package com.team4.prompt.evaluation.controller;
 
 import com.team4.prompt.common.CurrentUser;
+import com.team4.prompt.evaluation.controller.dto.CanEvaluatedProjectList;
 import com.team4.prompt.evaluation.controller.dto.EvaluationDto;
 import com.team4.prompt.evaluation.controller.dto.EvaluationListDto;
 import com.team4.prompt.evaluation.service.EvaluationService;
@@ -20,7 +21,7 @@ public class EvaluationController {
     private final EvaluationService evaluationService;
 
     @GetMapping("/project/list")
-    public List<ProjectDto> getProjectsForEvaluation(@CurrentUser User user) {
+    public CanEvaluatedProjectList getProjectsForEvaluation(@CurrentUser User user) {
         return evaluationService.getProjectsForEvaluation(user);
     }
 
