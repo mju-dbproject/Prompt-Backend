@@ -6,6 +6,6 @@ import lombok.Data;
 public class FindUserIdRequest {
 
     private String name;
-    private String email;
+    private String registerNumber;
 
 }

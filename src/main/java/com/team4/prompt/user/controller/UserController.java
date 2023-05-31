@@ -36,11 +36,10 @@ public class UserController {
         return new CheckIdResponse(isNotDuplicated);
     }
 
-    @PutMapping("/password")
-    public void changePassword(@CurrentUser User user,
-                               @RequestBody ChangePasswordRequest changePasswordRequest) {
+    @PostMapping("/password")
+    public void changePassword(@RequestBody ChangePasswordRequest changePasswordRequest) {
 
-        userPasswordService.changePassword(user, changePasswordRequest);
+        userPasswordService.changePassword(changePasswordRequest);
     }
 
     //내 정보 수정
@@ -58,7 +57,7 @@ public class UserController {
     //아이디찾기
     @PostMapping("/find-id")
     public FindUserIdResponse findUserId(@RequestBody FindUserIdRequest findUserIdRequest) {
-        String userId = userService.findUserIdByNameAndEmail(findUserIdRequest.getName(), findUserIdRequest.getEmail());
+        String userId = userService.findUserIdByNameAndRegisterNumber(findUserIdRequest.getName(), findUserIdRequest.getRegisterNumber());
         return new FindUserIdResponse(userId);
     }
 
@@ -81,6 +80,5 @@ public class UserController {
     public ApproveListResponse getApprovalList(){
         return userService.getApprovalList();
     }
-
 
 }

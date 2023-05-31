@@ -20,7 +20,7 @@ import java.util.List;
 public class EvaluationController {
     private final EvaluationService evaluationService;
 
-    @GetMapping("/project/list")
+    @GetMapping("/projects")
     public CanEvaluatedProjectList getProjectsForEvaluation(@CurrentUser User user) {
         return evaluationService.getProjectsForEvaluation(user);
     }
